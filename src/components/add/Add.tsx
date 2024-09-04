@@ -1,5 +1,6 @@
 import { GridColDef } from "@mui/x-data-grid";
-import "./add.scss";
+import { addStyle } from "./add.style";
+// import "./add.scss";
 // import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 type Props = {
@@ -47,7 +48,7 @@ const Add = (props: Props) => {
     props.setOpen(false)
   };
   return (
-    <div className="add">
+    <div className="add" css={addStyle}>
       <div className="modal">
         <span className="close" onClick={() => props.setOpen(false)}>
           X

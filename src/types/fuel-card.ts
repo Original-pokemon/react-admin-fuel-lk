@@ -4,8 +4,8 @@ export type FuelCardType = {
   description: string;
   dt: string; // ДатаВремя события
   uidHex: string;
-  serial: bigint; // Серийный номер изменения на карте со стороны чипа
-  serialServer: bigint; // Серийный номер изменения на карте со стороны сервера
+  serial: number; // Серийный номер изменения на карте со стороны чипа
+  serialServer: number; // Серийный номер изменения на карте со стороны сервера
   version: number; // Версия формата карты
   small: boolean; // Размер карты
   cardNum: number; // Номер карты числом
@@ -41,10 +41,10 @@ export type FuelCardType = {
   retFuel: number;
   retVolume: number;
   retPrice: number;
-  longUpdate: bigint;
-  specUpdCur: bigint;
+  longUpdate: number;
+  specUpdCur: number;
   lastChanges: string;
-  id: bigint;
+  id: number;
 };
 
 export type FuelType = keyof typeof FuelTypeName;

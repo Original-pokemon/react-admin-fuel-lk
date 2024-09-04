@@ -1,24 +1,28 @@
-import Home from "./pages/home/Home";
-import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
-import Users from "./pages/users/Users";
-import Products from "./pages/products/Products";
-import Navbar from "./components/navbar/Navbar";
-import Footer from "./components/footer/Footer";
-import Menu from "./components/menu/Menu";
-import Login from "./pages/login/Login";
-import "./styles/global.scss";
-import User from "./pages/user/User";
-import Product from "./pages/product/Product";
 import {
-  QueryClient,
-  QueryClientProvider,
-} from "@tanstack/react-query";
-
+  createBrowserRouter,
+  RouterProvider,
+  Outlet,
+  Routes,
+  Route,
+} from "react-router-dom";
+import Home from "./pages/home/home";
+import Transactions from "./pages/transactions/transactions";
+import Cards from "./pages/cards/cards";
+import Navbar from "./components/nav-bar/nav-bar";
+import Footer from "./components/footer/Footer";
+import Menu from "./components/menu/menu";
+import Login from "./pages/login/login";
+import Profile from "./pages/profile/profile";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import AzsMap from "./pages/azs-map/azs-map";
+import { AppRoute } from "./const";
+import Contracts from "./pages/contracts/contracts";
+import GlobalStyles from "./styles/global";
 
 const queryClient = new QueryClient();
 
 function App() {
-  const Layout = () => {
+  function Layout() {
     return (
       <div className="main">
         <Navbar />
@@ -35,42 +39,28 @@ function App() {
         <Footer />
       </div>
     );
-  };
+  }
 
-  const router = createBrowserRouter([
-    {
-      path: "/",
-      element: <Layout />,
-      children: [
-        {
-          path: "/",
-          element: <Home />,
-        },
-        {
-          path: "/users",
-          element: <Users />,
-        },
-        {
-          path: "/products",
-          element: <Products />,
-        },
-        {
-          path: "/users/:id",
-          element: <User />,
-        },
-        {
-          path: "/products/:id",
-          element: <Product />,
-        },
-      ],
-    },
-    {
-      path: "/login",
-      element: <Login />,
-    },
-  ]);
-
-  return <RouterProvider router={router} />;
+  return (
+    <>
+      <GlobalStyles />
+      <Routes>
+        <Route path={AppRoute.Main} element={<Layout />}>
+          <Route index element={<Home />} />
+          <Route path={AppRoute.Profile} element={<Profile />} />
+          <Route path={AppRoute.Transaction} element={<Transactions />} />
+          <Route path={AppRoute.Cards} element={<Cards />} />
+          <Route path={AppRoute.Contracts} element={<Contracts />} />
+          <Route path={AppRoute.AzsMap} element={<AzsMap />} />
+          {/* <Route
+        path={AppRoute.PageNotFound}
+        element={<NotFoundPage />} 
+        /> */}
+        </Route>
+        <Route path={AppRoute.Login} element={<Login />} />
+      </Routes>
+    </>
+  );
 }
 
 export default App;

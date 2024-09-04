@@ -1,42 +1,47 @@
-import { MapContainer } from "react-leaflet/MapContainer"
-import { useEffect, useState } from "react"
-import { mapInfo } from "../../mock/map-info"
-import { LatLngTuple } from "leaflet"
-import { Marker, TileLayer } from "react-leaflet"
+import { MapContainer } from "react-leaflet/MapContainer";
+import { LatLngExpression } from "leaflet";
+import { Marker, TileLayer, Popup } from "react-leaflet";
 
-const MOSCOW_COORD: LatLngTuple = [55.751244, 37.618423]
+type MarkerProperties = {
+  position: [number, number];
+  popupContent?: string;
+};
 
-const Map = () => {
-  const data = mapInfo
-  const [currentLocation, setCurrentLocation] = useState<LatLngTuple | null>(null)
-  
-  const success: PositionCallback = ({ coords }) => {
-    const { latitude, longitude } = coords
-    const position: LatLngTuple = [latitude, longitude]
+type Properties = {
+  mapConfig: {
+    center: LatLngExpression;
+    zoomConfig: {
+      zoom: number;
+      maxZoom?: number;
+      minZoom?: number;
+      scrollWheelZoom?: boolean;
+      attributionControl?: boolean;
+      zoomControl?: boolean;
+      doubleClickZoom?: boolean;
+      touchZoom?: boolean;
+      boxZoom?: boolean;
+    };
+    keyboard?: boolean;
+    dragging?: boolean;
+    style?: React.CSSProperties;
+  };
+  markers: MarkerProperties[];
+};
 
-    setCurrentLocation(position)
-  }
-
-  const error: PositionErrorCallback = ({ message }) => {
-    console.log(message)
-  }
-
-  useEffect(() => {
-    if (!currentLocation) {
-      navigator.geolocation.getCurrentPosition(success, error, {
-        enableHighAccuracy: true
-      })
-    }
-  }, [currentLocation])
+const Map = ({ mapConfig, markers }: Properties) => {
+  const { zoomConfig, ...config } = mapConfig;
 
   return (
-    <MapContainer center={currentLocation || MOSCOW_COORD}  attributionControl={false} scrollWheelZoom={false} zoom={9} maxZoom={18}  minZoom={5} style={{ height: '100%'}}>
+    <MapContainer {...config} {...zoomConfig}>
       <TileLayer url={"https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"} />
-      {data.features.map((item, index) => (
-        <Marker key={index} position={item.geometry.coordinates as LatLngTuple} />
+      {
+        markers.map(({ popupContent, position }, index) => (
+          <Marker key={index} position={position}>
+            {popupContent && <Popup>{popupContent}</Popup>}
+          </Marker>
       ))}
     </MapContainer>
-  )
-}
+  );
+};
 
-export default Map
+export default Map;

@@ -1,6 +1,6 @@
-import "./cards-box.scss";
 import { useAppSelector } from "../../../hooks/state.ts";
 import { getCards } from "../../../store/selectors.ts";
+import InfoBox from "../info-box/info-box.tsx";
 
 const CardsBox = () => {
   const cards = useAppSelector(getCards);
@@ -10,23 +10,14 @@ const CardsBox = () => {
   if (!cards) return null;
 
   return (
-    <div className="topBox">
-      <h1>Топливные карты</h1>
-      <div className="list">
-        <div className="listItem">
-          <span className="name">Всего карт</span>
-          <span className="value">{cards.length}</span>
-        </div>
-        <div className="listItem">
-          <span className="name">Активных карт</span>
-          <span className="value">{activeCards?.length}</span>
-        </div>
-        <div className="listItem">
-          <span className="name">Заблокированых карт</span>
-          <span className="value">{blockCards?.length}</span>
-        </div>
-      </div>
-    </div>
+    <InfoBox
+      title="Топливные карты"
+      data={[
+        { "Всего карт": cards.length },
+        { "Активных карт": activeCards?.length || 0 },
+        { "Заблокированных карт": blockCards?.length || 0 },
+      ]}
+    />
   );
 };
 

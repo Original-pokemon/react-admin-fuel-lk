@@ -1,7 +1,11 @@
 export const AppRoute = {
-  Main: '/',
-  Cards: '/card',
-  Card: '/card/:id',
-  Transaction: '/transaction',
-  PageNotFound: '*'
+  Main: "/",
+  Profile: "/profile",
+  Cards: "/cards",
+  Card: "/cards/:id",
+  Transaction: "/transactions",
+  Contracts: "/contracts",
+  AzsMap: "/azs-map",
+  Login: "/login",
+  PageNotFound: "*",
 } as const;

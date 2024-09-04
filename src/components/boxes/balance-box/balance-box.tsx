@@ -1,33 +1,19 @@
-import "./balance-box.scss"
-import { useAppSelector } from "../../../hooks/state.ts"
-import { getTotalBalance } from "../../../store/selectors.ts"
-import { FuelTypeLabel } from "../../../const/fuel-card.ts"
+import { useAppSelector } from "../../../hooks/state";
+import { getContracts } from "../../../store/selectors";
+import calculateBalance from "../../../utils/balance";
+import InfoBox from "../info-box/info-box";
 
 const BalanceBox = () => {
-  const cards = useAppSelector(state => state.cards)
-  const totalFuelBalance = useAppSelector(getTotalBalance)
+  const contracts = useAppSelector(getContracts);
 
-  if (!cards) return null
-
+  const balance = calculateBalance(contracts);
   return (
-    <div className="topBox">
-      <h1>Баланс</h1>
-      <div className="list">
-        {
-          Object.entries(totalFuelBalance).map(([key, value]) => (
-            <div className="listItem" key={key}>
-              <div className="fuelType">
-                <span className="value">{FuelTypeLabel[key as keyof typeof FuelTypeLabel]}</span>
-              </div>
-              <div className="fuelData">
-                <span className="value">{value} литров</span>
-              </div>
-            </div>
-          ))
-        }
-      </div>
-    </div>
-  )
-}
+    <InfoBox
+      key={1}
+      title="Баланс организации"
+      data={[{ Всего: balance.toString() }]}
+    />
+  );
+};
 
-export default BalanceBox
+export default BalanceBox;

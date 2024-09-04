@@ -1,20 +1,12 @@
-import "./contacts-box.scss"
+import InfoBox from "../info-box/info-box";
 
 const contactsBox = () => {
-
   return (
-    <div className="topBox">
-      <h1>Контакты</h1>
-      <div className="list">
-        <div className="listItem">
-            <span className="title">Ольга Иванова</span>
-        </div>
-        <div className="listItem">
-            <span className="contacts">+7 (999) 999-99-99</span>
-        </div>
-      </div>
-    </div>
-  )
-}
+    <InfoBox
+      title="Контакты"
+      data={[{ "Ольга Иванова": "+7 (999) 999-99-99" }]}
+    />
+  );
+};
 
-export default contactsBox
+export default contactsBox;

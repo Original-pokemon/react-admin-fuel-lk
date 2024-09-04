@@ -1,90 +1,67 @@
-import {
-  Legend,
-  Line,
-  LineChart,
-  ResponsiveContainer,
-  Tooltip,
-  XAxis,
-  YAxis,
-} from "recharts";
-import "./single.scss";
+import { useSelector } from "react-redux";
+import { GridColDef } from "@mui/x-data-grid";
+import { ReactElement } from "react";
+import { getCards } from "../../store/selectors";
+import FuelBox from "../boxes/fuel-box/fuel-box";
+import DataTable from "../dataTable/data-table";
+import generateRandomTransaction from "../../mock/card-transaction";
+import { singleStyle } from "./single.style";
 
-type Props = {
+type Properties = {
   id: number;
   img?: string;
   title: string;
-  info: object;
-  chart?: {
-    dataKeys: { name: string; color: string }[];
-    data: object[];
+  details: {
+    [key: string]: string;
   };
-  activities?: { time: string; text: string }[];
+  otherDetails?: JSX.Element[];
+  dataGrid?: JSX.Element;
 };
 
-const Single = (props: Props) => {
+const Single = (properties: Properties) => {
+  const { id, img, title, details, otherDetails, dataGrid } = properties;
+
   return (
-    <div className="single">
+    <div className="single" key={id} css={singleStyle}>
       <div className="view">
         <div className="info">
           <div className="topInfo">
-            {props.img && <img src={props.img} alt="" />}
-            <h1>{props.title}</h1>
-            <button>Update</button>
+            {img && <img src={img} alt="img" />}
+            <h1>{title}</h1>
+            {/* <button>Update</button> */}
           </div>
           <div className="details">
-            {Object.entries(props.info).map((item) => (
-              <div className="item" key={item[0]}>
-                <span className="itemTitle">{item[0]}</span>
-                <span className="itemValue">{item[1]}</span>
+            {Object.entries(details).map(([key, value], index) => (
+              <div className="item" key={index}>
+                <span className="itemTitle">{key}</span>
+                <span className="itemValue">{value}</span>
               </div>
             ))}
           </div>
         </div>
-        <hr />
-        {props.chart && (
-          <div className="chart">
-            <ResponsiveContainer width="100%" height="100%">
-              <LineChart
-                width={500}
-                height={300}
-                data={props.chart.data}
-                margin={{
-                  top: 5,
-                  right: 30,
-                  left: 20,
-                  bottom: 5,
-                }}
-              >
-                <XAxis dataKey="name" />
-                <YAxis />
-                <Tooltip />
-                <Legend />
-                {props.chart.dataKeys.map((dataKey) => (
-                  <Line
-                    type="monotone"
-                    dataKey={dataKey.name}
-                    stroke={dataKey.color}
-                  />
-                ))}
-              </LineChart>
-            </ResponsiveContainer>
-          </div>
-        )}
-      </div>
-      <div className="activities">
-        <h2>Latest Activities</h2>
-        {props.activities && (
-          <ul>
-            {props.activities.map((activity) => (
-              <li key={activity.text}>
-                <div>
-                  <p>{activity.text}</p>
-                  <time>{activity.time}</time>
-                </div>
-              </li>
+        <div className="otherDetails">
+          {otherDetails &&
+            otherDetails.map((detail, index) => (
+              <div className="otherDetail" key={index}>
+                {detail}
+              </div>
             ))}
-          </ul>
-        )}
+        </div>
+
+        {dataGrid && <div className="rightSideBlock">{dataGrid}</div>}
+        {/* <div className="balance">
+          <FuelBox />
+          </div>
+        <div className="transactions">
+          <div className="info">
+            <h1>Транзакции</h1>
+          </div>
+          <DataTable
+            slug="transactions"
+            columns={columns}
+            rows={transactions}
+          />
+        </div> */}
       </div>
     </div>
   );
