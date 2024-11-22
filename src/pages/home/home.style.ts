@@ -1,31 +1,32 @@
 import { css } from '@emotion/react';
 import { theme } from '../../styles/theme';
+import { Box, BoxProps, styled } from '@mui/material';
 
-export const homeStyle = css({
+export const HomeStyledBox = styled(Box)<BoxProps>(({ theme }) => ({
   display: 'grid',
   gap: '1.125rem',
   gridTemplateColumns: 'repeat(4, 1fr)',
   gridAutoRows: 'minmax(11.25rem, auto)',
   gridAutoFlow: 'dense',
 
-  [theme.breakpoints.xl]: {
+  [theme.breakpoints.values.xl]: {
     gridTemplateColumns: 'repeat(3, 1fr)',
   },
-  [theme.breakpoints.lg]: {
+  [theme.breakpoints.values.lg]: {
     gridTemplateColumns: 'repeat(2, 1fr)',
   },
-  [theme.breakpoints.md]: {
+  [theme.breakpoints.values.md]: {
     gridTemplateColumns: 'repeat(1, 1fr)',
   },
-  [theme.breakpoints.sm]: {
+  [theme.breakpoints.values.sm]: {
     gridAutoRows: 'minmax(7.5rem, auto)',
   },
 
   '.box': {
     borderRadius: '0.625rem',
-    border: ['0.125rem', 'solid', theme.bg.softBg],
+    border: ['0.125rem', 'solid', theme.palette.background.default],
 
-    [theme.breakpoints.md]: {
+    [theme.breakpoints.values.md]: {
       maxWidth: '26rem',
     }
   },
@@ -46,14 +47,14 @@ export const homeStyle = css({
   },
 
   '.box7': {
-    backgroundColor: theme.bg.softBg,
+    backgroundColor: theme.palette.background.default,
     borderRadius: '0.625rem',
     gridColumn: 'span 2',
     gridRow: 'span 2',
     padding: '1.25rem',
 
-    [theme.breakpoints.md]: {
+    [theme.breakpoints.values.md]: {
       display: 'none',
     },
   },
-});
+}))

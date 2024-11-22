@@ -4,26 +4,87 @@ import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
-import Link from "@mui/material/Link";
-import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
+import { useAppDispatch, useAppSelector } from "#root/hooks/state";
+import { postAuthData } from "#root/store/slice/auth-data/thunk";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { AppRoute } from "#root/const";
+import { getAuthStatus } from "#root/store";
+import { Spinner } from "#root/components/spinner/spinner";
+import { IconButton, InputAdornment } from "@mui/material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { Controller, useForm } from "react-hook-form";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+
+type LoginFormData = {
+  username: string;
+  password: string;
+  rememberMe: boolean;
+}
+
+const schema = yup.object({
+  username: yup
+    .string()
+    .required("Имя пользователя обязательно.")
+    .matches(/^[a-zA-Z0-9._-]{3,20}$/, "Пожалуйста, введите валидное имя пользователя.")
+    .trim(),
+  password: yup
+    .string()
+    .required("Пароль обязателен.")
+    .min(3, 'Пароль должен содержать не менее 3 символов.')
+    .matches(/^\S*$/, 'Пароль не должен содержать пробелы.'),
+  rememberMe: yup.boolean().default(false),
+});
 
 const Login = () => {
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+  const dispatch = useAppDispatch()
+  const { isSuccess, isLoading } = useAppSelector(getAuthStatus)
+  const navigate = useNavigate()
+
+  const [showPassword, setShowPassword] = useState(false);
+
+  const { control, handleSubmit, formState: { errors, isValid } } = useForm<LoginFormData>({
+    resolver: yupResolver(schema),
+    delayError: 500,
+    mode: "onChange",
+    defaultValues: {
+      username: "",
+      password: "",
+      rememberMe: false,
+    },
+  });
+
+  const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    const char = (event.key);
+    const regex = /^[a-zA-Z0-9_-]+$/;
+    if (!regex.test(char)) {
+      event.preventDefault();
+    }
   };
+
+  const onSubmit = async (data: LoginFormData) => {
+    dispatch(postAuthData(data));
+  };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword((prev) => !prev);
+  };
+
+  useEffect(() => {
+    if (isSuccess) {
+      navigate(AppRoute.Main);
+    }
+  }, [isSuccess])
 
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
+      {isLoading && <Spinner fullscreen size={70} />}
       <Box
         sx={{
           marginTop: 8,
@@ -36,45 +97,102 @@ const Login = () => {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign in
+          Вход в систему
         </Typography>
         <Box
           component="form"
-          onSubmit={handleSubmit}
+          onSubmit={handleSubmit(onSubmit)}
           noValidate
           sx={{ mt: 1 }}
         >
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
-            autoFocus
+          <Controller
+            name="username"
+            control={control}
+            defaultValue=""
+            render={({ field }) => (
+              <TextField
+                {...field}
+                error={!!errors.username}
+                sx={(theme) => ({
+                  '& .MuiInputLabel-root': {
+                    color: theme.palette.text.primary,
+                  }
+                })}
+                helperText={errors.username?.message}
+                margin="normal"
+                required
+                fullWidth
+                label="Имя пользователя"
+                autoComplete="username"
+                autoFocus
+                onKeyDown={handleKeyPress}
+              />
+            )}
           />
-          <TextField
-            margin="normal"
-            required
-            fullWidth
+          <Controller
             name="password"
-            label="Password"
-            type="password"
-            id="password"
-            autoComplete="current-password"
+            control={control}
+            defaultValue=""
+            render={({ field }) => (
+              <TextField
+                {...field}
+                error={!!errors.password}
+                sx={(theme) => ({
+                  '& .MuiInputLabel-root': {
+                    color: theme.palette.text.primary,
+                  }
+                })}
+                helperText={errors.password?.message}
+                margin="normal"
+                required
+                fullWidth
+                label="Пароль"
+                autoComplete="current-password"
+                type={showPassword ? "text" : "password"}
+                onKeyDown={handleKeyPress}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton onClick={togglePasswordVisibility} edge="end">
+                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
+
+              />
+            )}
           />
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
+          <Controller
+            name="rememberMe"
+            control={control}
+            render={({ field }) => (
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    {...field}
+                    value={field.value}
+                    sx={(theme) => ({
+                      color: theme.palette.grey[500],
+                      '&.Mui-checked': {
+                        color: theme.palette.text.primary,
+                      },
+                    })}
+                    color="secondary"
+                  />
+                }
+                label="Запомнить меня"
+              />
+            )}
           />
           <Button
             type="submit"
             fullWidth
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
+            disabled={isLoading || !isValid}
           >
-            Sign In
+            {isLoading ? "Вход..." : "Войти"}
           </Button>
         </Box>
       </Box>

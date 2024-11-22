@@ -32,14 +32,6 @@ const AzsMap = () => {
   const sugFilteredMarkers = filterFeaturesByOption(mapInfo, "sug")
   const shopFilteredMarkers = filterFeaturesByOption(mapInfo, "shop")
 
-  console.log('filteredMarkers :>> ', ai92FilteredMarkers);
-  console.log('ai95FilteredMarkers :>> ', ai95FilteredMarkers);
-  console.log('ai95pFilteredMarkers :>> ', ai95pFilteredMarkers);
-  console.log('dtFilteredMarkers :>> ', dtFilteredMarkers);
-  console.log('ai100pFilteredMarkers :>> ', ai100pFilteredMarkers);
-  console.log('sugFilteredMarkers :>> ', sugFilteredMarkers);
-  console.log('shopFilteredMarkers :>> ', shopFilteredMarkers);
-
 
   const markers = prepareMarkers(mapInfo, true);
   return (

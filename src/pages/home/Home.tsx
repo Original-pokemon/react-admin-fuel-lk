@@ -1,62 +1,90 @@
-import FuelBox from "../../components/boxes/fuel-box/fuel-box";
-import CardsBox from "../../components/boxes/cards-box/cards-box";
-import ContactsBox from "../../components/boxes/contacts-box/contacts-box";
 import Map from "../../components/map/map";
 
 import mapInfo from "../../mock/map-info";
 import { prepareMarkers } from "../../utils/markers";
 import { ODINTSOVO_COORD } from "../../const/map";
 import { AppRoute } from "../../const";
-import { redirectToRoute } from "../../store/action";
-import { useAppDispatch } from "../../hooks/state";
-import BalanceBox from "../../components/boxes/balance-box/balance-box";
-import { homeStyle } from "./home.style";
+import { HomeStyledBox } from "./home.style";
+import { useNavigate } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "#root/hooks/state";
+import { getFirmCards, getFirmCash, getFirmInfo, getFirmStatus, getFirmWallet } from "#root/store/slice/firm/selectors";
+import { Spinner } from "#root/components/spinner/spinner";
+import FirmCashDisplay from "#root/components/boxes/firm-cash/firm-cash";
+import { useEffect } from "react";
+import { fetchFirmData } from "#root/store/slice/firm/thunk";
+import FirmWalletDisplay from "#root/components/boxes/firm-wallet/firm-wallet";
+import CardsSummary from "#root/components/boxes/firm-cards/firm-cards";
+import ContactsBox from "#root/components/boxes/contacts-box/contacts-box";
+import { Box } from "@mui/material";
+
+const mapConfig = {
+  center: ODINTSOVO_COORD,
+  keyboard: false,
+  dragging: false,
+  attributionControl: false,
+  zoomConfig: {
+    zoom: 9,
+    scrollWheelZoom: false,
+    zoomControl: false,
+    doubleClickZoom: false,
+    touchZoom: false,
+    boxZoom: false,
+  },
+  style: { height: "100%" },
+};
+const markers = prepareMarkers(mapInfo);
+
+// Выводить критичную информацию, у каких карт низкий баланк, какие карты заблокированы и т.д.
 
 const Home = () => {
-  const dispatch = useAppDispatch();
-  const mapConfig = {
-    center: ODINTSOVO_COORD,
-    keyboard: false,
-    dragging: false,
-    attributionControl: false,
-    zoomConfig: {
-      zoom: 9,
-      scrollWheelZoom: false,
-      zoomControl: false,
-      doubleClickZoom: false,
-      touchZoom: false,
-      boxZoom: false,
-    },
-    style: { height: "100%" },
-  };
+  const navigate = useNavigate()
+  const dispatch = useAppDispatch()
+  const { isSuccess, isIdle, isLoading } = useAppSelector(getFirmStatus)
+  const firmInfo = useAppSelector(getFirmInfo)
+  const cards = useAppSelector(getFirmCards)
+  const isLoaded = isSuccess && firmInfo
 
-  const markers = prepareMarkers(mapInfo);
+  useEffect(() => {
+    if (!firmInfo && isIdle) {
+      dispatch(fetchFirmData())
+    }
+
+  }, [dispatch, firmInfo, isIdle])
+
+  if (isLoading) {
+    return <Spinner />
+  }
 
   return (
-    <div className="home" css={homeStyle}>
-      <div className="box box1">
-        <FuelBox />
-      </div>
-      <div className="box box2">
-        <CardsBox />
-      </div>
-      <div className="box box3">
-        <BalanceBox />
-      </div>
-      <div className="box box4">
-        <ContactsBox />
-      </div>
-      <div
-        style={{ cursor: "pointer" }}
-        className="box box7"
-        onClick={() => {
-          console.log("click :>>");
-          dispatch(redirectToRoute(AppRoute.AzsMap));
-        }}
-      >
-        <Map mapConfig={{ ...mapConfig }} markers={markers} />
-      </div>
-    </div>
+    <>
+      {isLoaded && (
+        <HomeStyledBox className="home">
+          <Box className="box box1">
+            <FirmCashDisplay firmCash={firmInfo.firmcash} />
+          </Box>
+          <Box className="box box2">
+            <FirmWalletDisplay fuelWallet={firmInfo.firmwallet} />
+            {/* <CardsBox /> */}
+          </Box>
+          <Box className="box box3">
+            <CardsSummary cards={cards} />
+            {/* <BalanceBox /> */}
+          </Box>
+          <Box className="box box4">
+            <ContactsBox />
+          </Box>
+          <Box
+            style={{ cursor: "pointer" }}
+            className="box box7"
+            onClick={() => {
+              navigate(AppRoute.AzsMap);
+            }}
+          >
+            <Map mapConfig={{ ...mapConfig }} markers={markers} />
+          </Box>
+        </HomeStyledBox>
+      )}
+    </>
   );
 };
 

@@ -1,14 +1,7 @@
-import { css } from '@emotion/react';
+import { Box, BoxProps, styled } from '@mui/material';
 
-export const transactionsStyle = css({
-  ".info": {
-    display: "flex",
+export const TransactionsStyledBox = styled(Box)<BoxProps>(() => ({
     alignItems: "center",
     gap: "20px",
     marginBottom: "20px",
-    button: {
-      padding: "5px",
-      cursor: "pointer",
-    },
-  }
-})
+}))

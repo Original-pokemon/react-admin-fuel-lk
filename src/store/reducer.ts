@@ -1,30 +1,14 @@
-import { createReducer } from "@reduxjs/toolkit";
-import { setCards } from "./action";
-import { FuelCardType } from "../types";
-import { generateMockFuelCardList } from "../mock/fuel-card";
-import { FirmType } from "../types/firm";
-import Firm from "../mock/firm";
-import { ContractType } from "../types/contract";
-import contracts from "../mock/contracts";
+import { combineReducers } from "@reduxjs/toolkit";
+import { NameSpace } from "#root/const";
+import { authDataSlice, firmDataSlice, appDataSlice, transactionDataSlice } from "./slice";
 
-type InitialStateType = {
-  cards: FuelCardType[] | null;
-  firm: FirmType;
-  contracts: ContractType[];
-};
+const reducer = combineReducers({
+  [NameSpace.Auth]: authDataSlice.reducer,
+  [NameSpace.Firm]: firmDataSlice.reducer,
+  [NameSpace.App]: appDataSlice.reducer,
+  [NameSpace.Transaction]: transactionDataSlice.reducer
+})
 
-const initialState: InitialStateType = {
-  cards: null,
-  firm: Firm,
-  contracts,
-};
-
-const cards = generateMockFuelCardList(10);
-
-const reducer = createReducer(initialState, (builder) => {
-  builder.addCase(setCards, (state) => {
-    state.cards = cards;
-  });
-});
+export type InitialStateType = ReturnType<typeof reducer>;
 
 export { reducer };

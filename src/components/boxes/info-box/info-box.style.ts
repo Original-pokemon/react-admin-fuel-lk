@@ -1,16 +1,17 @@
 import { css } from '@emotion/react';
 import { theme } from '../../../styles/theme';
+import { Box, BoxProps, styled } from '@mui/material';
 
-export const infoBoxStyle = css({
+export const InfoStyledBox = styled(Box)<BoxProps>(({ theme }) => ({
   minHeight: '15rem',
   padding: '2rem',
   borderRadius: '10px',
-  backgroundColor: theme.bg.softBg,
+  backgroundColor: theme.palette.background.paper,
 
   h1: {
     marginBottom: '20px',
 
-    [theme.breakpoints.xxl]: {
+    [theme.breakpoints.values.xl]: {
       fontSize: '24px',
     },
   },
@@ -36,4 +37,4 @@ export const infoBoxStyle = css({
       },
     },
   },
-});
+}))

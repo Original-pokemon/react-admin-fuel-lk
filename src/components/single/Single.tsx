@@ -1,69 +1,60 @@
 import { useSelector } from "react-redux";
 import { GridColDef } from "@mui/x-data-grid";
 import { ReactElement } from "react";
-import { getCards } from "../../store/selectors";
-import FuelBox from "../boxes/fuel-box/fuel-box";
-import DataTable from "../dataTable/data-table";
+import { DataTable } from "../layouts/data-layouts/data-table/data-table";
 import generateRandomTransaction from "../../mock/card-transaction";
 import { singleStyle } from "./single.style";
+import { Box, Typography } from "@mui/material";
 
 type Properties = {
-  id: number;
   img?: string;
   title: string;
   details: {
-    [key: string]: string;
+    [key: string]: string | JSX.Element;
   };
   otherDetails?: JSX.Element[];
   dataGrid?: JSX.Element;
 };
 
 const Single = (properties: Properties) => {
-  const { id, img, title, details, otherDetails, dataGrid } = properties;
+  const { img, title, details, otherDetails, dataGrid } = properties;
 
   return (
-    <div className="single" key={id} css={singleStyle}>
-      <div className="view">
-        <div className="info">
-          <div className="topInfo">
+    <Box className="single" css={singleStyle}>
+      <Box className="view">
+        <Box className="info">
+          <Box className="topInfo">
             {img && <img src={img} alt="img" />}
-            <h1>{title}</h1>
-            {/* <button>Update</button> */}
-          </div>
-          <div className="details">
+            <Typography variant="h5" component="h1">
+              {title}
+            </Typography>
+          </Box>
+          <Box className="details">
             {Object.entries(details).map(([key, value], index) => (
-              <div className="item" key={index}>
-                <span className="itemTitle">{key}</span>
-                <span className="itemValue">{value}</span>
-              </div>
+              <Box className="item" key={index}>
+                <Typography className="itemTitle" component="span">
+                  {key}
+                </Typography>
+                <Typography className="itemValue" component="span">
+                  {value}
+                </Typography>
+              </Box>
             ))}
-          </div>
-        </div>
-        <div className="otherDetails">
-          {otherDetails &&
-            otherDetails.map((detail, index) => (
-              <div className="otherDetail" key={index}>
+          </Box>
+        </Box>
+        {otherDetails && (
+          <Box className="otherDetails">
+            {otherDetails.map((detail, index) => (
+              <Box className="otherDetail" key={index}>
                 {detail}
-              </div>
+              </Box>
             ))}
-        </div>
+          </Box>
+        )}
 
-        {dataGrid && <div className="rightSideBlock">{dataGrid}</div>}
-        {/* <div className="balance">
-          <FuelBox />
-          </div>
-        <div className="transactions">
-          <div className="info">
-            <h1>Транзакции</h1>
-          </div>
-          <DataTable
-            slug="transactions"
-            columns={columns}
-            rows={transactions}
-          />
-        </div> */}
-      </div>
-    </div>
+        {dataGrid && <Box className="rightSideBlock">{dataGrid}</Box>}
+      </Box>
+    </Box>
   );
 };
 

@@ -4,7 +4,7 @@ import { theme } from '#root/styles/theme';
 export const singleStyle = css({
   display: 'flex',
 
-  [theme.breakpoints.xl]: {
+  [theme.breakpoints.values.xl]: {
     flexDirection: 'column',
     gap: '50px',
   },
@@ -31,7 +31,7 @@ export const singleStyle = css({
       },
       '.details': {
         fontSize: '18px',
-        backgroundColor: theme.bg.softBg,
+        backgroundColor: theme.palette.background.default,
         padding: '20px',
         margin: '20px 0',
         borderRadius: '10px',

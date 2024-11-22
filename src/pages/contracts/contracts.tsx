@@ -1,7 +1,6 @@
 import { GridColDef } from "@mui/x-data-grid";
-import DataTable from "../../components/dataTable/data-table";
+import { DataTable } from "../../components/layouts/data-layouts/data-table/data-table";
 import { useAppSelector } from "../../hooks/state";
-import { getContracts } from "../../store/selectors";
 
 const columns: GridColDef[] = [
   { field: "code", headerName: "Код", width: 100 },

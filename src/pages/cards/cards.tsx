@@ -1,80 +1,52 @@
-import { useState } from "react";
-import { GridColDef } from "@mui/x-data-grid";
-import DataTable from "../../components/dataTable/data-table";
-import { useAppSelector } from "../../hooks/state";
-import { getCards } from "../../store/selectors";
-import { productsStyle } from "./cards.style";
+import { CardsStyledBox } from "./cards.style";
 
-const columns: GridColDef[] = [
-  { field: "cardNum", headerName: "Номер карты", width: 150 },
-  {
-    field: "cardType",
-    type: "string",
-    headerName: "Тип карты",
-    width: 90,
-  },
-  {
-    field: "data14",
-    type: "string",
-    headerName: "АИ-92",
-    width: 150,
-  },
-  {
-    field: "data15",
-    type: "string",
-    headerName: "АИ-95",
-    width: 200,
-  },
-  {
-    field: "data19",
-    headerName: "АИ-95-PROF",
-    type: "string",
-    width: 200,
-  },
-  {
-    field: "data21",
-    headerName: "АИ-100-PROF",
-    width: 200,
-    type: "string",
-  },
-  {
-    field: "data17",
-    headerName: "ДТ",
-    width: 150,
-    type: "string",
-  },
-  {
-    field: "data18",
-    headerName: "ГАЗ",
-    width: 150,
-    type: "string",
-  },
-];
+import Single from "#root/components/single/single";
+import CardTable from "#root/components/cards/cards-table/cards-table";
+import { Breadcrumbs, Link, Theme, Typography, useMediaQuery } from "@mui/material";
+import { CardsList } from "#root/components/cards/cards-list/cards-list";
+import { useAppDispatch, useAppSelector } from "#root/hooks/state";
+import { Link as RouterLink } from "react-router-dom";
+import { fetchFirmData, getFirmCards, getFirmStatus } from "#root/store";
+import { useEffect } from "react";
+import { AppRoute } from "#root/const";
+import HomeIcon from '@mui/icons-material/Home';
+import PageLayout from "#root/components/layouts/page-layout/page-layout";
 
 const Cards = () => {
-  const [open, setOpen] = useState(false);
-  const cards = useAppSelector(getCards);
+  const dispatch = useAppDispatch()
+  const { isIdle, isLoading } = useAppSelector(getFirmStatus)
+  const cards = useAppSelector(getFirmCards)
+  const isSmallScreen = useMediaQuery((theme: Theme) => theme.breakpoints.down('sm'));
 
-  if (!cards) {
-    return null;
-  }
+  useEffect(() => {
+    if (isIdle) {
+      dispatch(fetchFirmData())
+    }
+  }, [dispatch, isIdle])
 
   return (
-    <div className="cards" css={productsStyle}>
-      <div className="info">
-        <h1>Карты</h1>
-        {/* <button onClick={() => setOpen(true)}>Add New Products</button> */}
-      </div>
-      <DataTable slug="cards" columns={columns} rows={cards} />
-      {/* TEST THE API */}
+    <PageLayout
+      title="Карты"
+      breadcrumbs={
+        <Breadcrumbs aria-label="breadcrumb" sx={{ mb: 2 }} color="primary.light">
+          <Link underline="hover" color="inherit" component={RouterLink} to={AppRoute.Main}>
+            <HomeIcon sx={{ mr: 0.5 }} fontSize="inherit" />
+            Главная
+          </Link>
+          <Typography color="text.primary">Карты</Typography>
+        </Breadcrumbs>
+      }
+      content={
+        <CardsStyledBox className="cards" >
+          {isSmallScreen ?
+            <CardsList cards={cards} isLoading={isLoading} /> :
+            <CardTable cards={cards} />
+          }
+        </CardsStyledBox>
+      }
+    />
 
-      {/* {isLoading ? (
-        "Loading..."
-      ) : (
-        <DataTable slug="products" columns={columns} rows={data} />
-      )} */}
-      {/* {open && <Add slug="product" columns={columns} setOpen={setOpen} />} */}
-    </div>
+
   );
 };
 

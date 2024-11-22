@@ -1,41 +1,31 @@
-import { FirmType } from "../types/firm";
+import { FirmInfoType } from "#root/types";
+import { faker } from "@faker-js/faker";
+import { generateMockFuelCardList } from "./fuel-card";
 
-const Firm: FirmType = {
-  isdel: false,
-  isgroup: false,
-  ingroupcode: "",
-  ingroupname: "",
-  code: 945,
-  name: "ГЛОБАЛ ИМПОРТ",
-  inn: "7751142107",
-  comment: "",
-  havemaster: 1,
-  mastercode: "ОР0000145",
-  okpocode: "",
-  kppcode: "772401001",
-  fullname: 'ОБЩЕСТВО С ОГРАНИЧЕННОЙ ОТВЕТСТВЕННОСТЬЮ"ГЛОБАЛ ИМПОРТ"',
-  juriclico: 1,
-  bankaccountcode: "000001349",
-  ogrncode: "",
-  subcontrol: 0,
-  cardsdetail: 0,
-  payercode: "",
-  messageformat: 0,
-  acquiring: 0,
-  commondogovorcontrcode: "",
-  paperfoldername: "429",
-  maingroupcode: "",
-  maingroupname: "",
-  talon10: 0,
-  talon15: 0,
-  talon20: 0,
-  talon40: 0,
-  givesfavans: 0,
-  givesrealis: 0,
-  mailfreq: "",
-  donotblock: 0,
-  donotblocktill: 10_101,
-  code1c: "ОР0000145",
-};
+const generateMockFirmData = async (delay = 0): Promise<FirmInfoType> => {
+  await new Promise((resolve) => setTimeout(resolve, delay));
 
-export default Firm;
+  return {
+    firmid: faker.number.int({ min: 100, max: 1000 }),
+    firmname: faker.company.name(),
+    firmcash: {
+      conf: faker.number.float({ min: 100, max: 1000 }),
+      unconf: faker.number.float({ min: 100, max: 1000 }),
+      remain: faker.number.float({ min: 100, max: 1000 }),
+      unconfV: faker.number.float({ min: 100, max: 1000 }),
+    },
+    firmwallet: [
+      {
+        fuelid: 14,
+        remain: faker.number.int({ min: 100, max: 1000 }),
+      },
+      {
+        fuelid: 15,
+        remain: faker.number.int({ min: 100, max: 1000 }),
+      }
+    ],
+    cards: generateMockFuelCardList(faker.number.int({ min: 1, max: 10 })),
+  }
+}
+
+export default generateMockFirmData;

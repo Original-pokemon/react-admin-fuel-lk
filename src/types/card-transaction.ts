@@ -1,18 +1,17 @@
-export type CardTransactionType = {
-  description: string;
-  id: string; // GUID транзакции
-  dt: string; // Дата время транзакции
-  firm: number; // Фирма
-  card: bigint; // Номер карты
-  uidhex: string; // UID карты строкой
-  op: -1 | 1; // Операция -1 списание, 1 пополнение
-  ot?: number; // Тип операции (не используется)
-  wt: number; // Тип кошелька
-  fuel: number; // Номер топлива
-  volume: number; // Объем топлива
-  price: number; // Цена
-  azsprice: number; // Цена по прайсу
-  azs: number; // Номер АЗС
-  smena: number; // Номер смены
-  smenadt: string; // Дата время начала смены
-};
+enum OperationType {
+  Debit = -1,
+  Credit = 1,
+}
+
+export type TransactionType = {
+  confirmed: 0 | 1;   // Статус подтверждения
+  dt: string;          // Дата и время транзакции
+  firmid: number;      // ID фирмы
+  cardnum: number;     // Номер карты
+  op: OperationType;          // Операция (-1 для списания, 1 для пополнения)
+  fuelid: number;      // ID топлива
+  price: number;       // Цена за единицу
+  volume: number;      // Объем топлива
+  summa: number;       // Сумма транзакции
+  azs: number;         // ID АЗС
+}

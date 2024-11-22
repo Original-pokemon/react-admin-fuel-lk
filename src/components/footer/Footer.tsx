@@ -1,11 +1,13 @@
 import Logo from "../logo/logo"
-import { footerStyle } from "./footer.style"
+import { FooterStyledBox } from "./footer.style"
 
-const Footer = () => {
+
+
+const Footer = ({ className }: { className?: string }) => {
   return (
-    <div className="footer" css={footerStyle}>
+    <FooterStyledBox className={className} >
       <Logo />
-    </div>
+    </FooterStyledBox>
   )
 }
 

@@ -1,8 +1,8 @@
-import { infoBoxStyle } from "./info-box.style";
+import { Box, Grid, Typography } from "@mui/material";
+import { InfoStyledBox } from "./info-box.style";
+import { Fragment } from "react";
 
-type InfoItem = {
-  [key: string]: string | number;
-};
+type InfoItem = Record<string, string | number | JSX.Element>
 
 type InfoBoxProperties = {
   title: string;
@@ -11,21 +11,23 @@ type InfoBoxProperties = {
 
 const InfoBox = ({ title, data }: InfoBoxProperties) => {
   return (
-    <div className="infoBox" css={infoBoxStyle}>
-      <h1>{title}</h1>
-      <div className="list">
+    <InfoStyledBox >
+      <Typography variant="h5" component="h1">
+        {title}
+      </Typography>
+      <Box className="list">
         {data.map((item, index) => (
-          <div className="listItem" key={index}>
+          <Box className="listItem" key={index}>
             {Object.entries(item).map(([key, value]) => (
-              <>
-                <span className="name">{key}</span>
-                <span className="value">{value}</span>
-              </>
+              <Fragment key={key}>
+                <Typography className="name">{key}</Typography>
+                <Typography className="value">{value}</Typography>
+              </Fragment>
             ))}
-          </div>
+          </Box>
         ))}
-      </div>
-    </div>
+      </Box>
+    </InfoStyledBox>
   );
 };
 

@@ -1,29 +1,26 @@
 import { faker } from "@faker-js/faker";
-import { CardTransactionType } from "../types/card-transaction";
+import { TransactionType } from "../types/card-transaction";
 
-const generateRandomTransaction = (): CardTransactionType => {
-  const transactionType = faker.helpers.arrayElement([-1, 1]) as -1 | 1;
+export const generateMockCardTransaction = (): TransactionType => {
+  const transactionType = faker.helpers.arrayElement([-1, 1]);
 
   return {
-    description: "Оперативная транзакция по карте Chip",
-    id: faker.datatype.uuid(),
+    confirmed: faker.helpers.arrayElement([0, 1]),
     dt: faker.date.recent().toISOString(),
-    firm: faker.datatype.number({ min: 1, max: 100 }),
-    card: faker.datatype.bigInt({
+    firmid: faker.number.int({ min: 1, max: 100 }),
+    cardnum: faker.number.int({
       min: 100_000_000_000_000,
       max: 999_999_999_999_999,
     }),
-    uidhex: faker.datatype.uuid(),
     op: transactionType,
-    wt: faker.datatype.number({ min: 1, max: 100 }),
-    fuel: faker.datatype.number({ min: 1, max: 100 }),
-    volume: faker.datatype.float({ min: 1, max: 1000 }),
-    price: faker.datatype.float({ min: 1, max: 100 }),
-    azsprice: faker.datatype.float({ min: 1, max: 100 }),
-    azs: faker.datatype.number({ min: 1, max: 100 }),
-    smena: faker.datatype.number({ min: 1, max: 100 }),
-    smenadt: faker.date.recent().toISOString(),
+    fuelid: faker.helpers.arrayElement([14, 15, 17, 18, 19, 21]),
+    volume: faker.number.int({ min: 1, max: 1000 }),
+    price: faker.number.int({ min: 1, max: 100 }),
+    summa: faker.number.int({ min: 1, max: 100 }),
+    azs: faker.number.int({ min: 1, max: 100 }),
   };
 };
 
-export default generateRandomTransaction;
+export const generateMockCardTransactionList = (length: number) =>
+  Array.from({ length }, () => generateMockCardTransaction());
+

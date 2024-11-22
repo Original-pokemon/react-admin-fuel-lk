@@ -3,10 +3,12 @@ import ReactDOM from "react-dom/client";
 import { Provider } from "react-redux";
 import App from "./app.tsx";
 import store from "./store/index.ts";
-import { setCards } from "./store/action.ts";
-import HistoryRouter from "./components/history-route/history-route.tsx";
-import browserHistory from './browser-history/browser-history';
-store.dispatch(setCards());
+
+import {
+  BrowserRouter,
+} from "react-router-dom";
+import { ThemeProvider } from "@emotion/react";
+import { theme } from "./styles/theme.ts";
 
 const root = ReactDOM.createRoot(
   document.querySelector("#root") as HTMLElement,
@@ -14,10 +16,13 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
-    <HistoryRouter history={browserHistory}>
+    <BrowserRouter >
       <Provider store={store}>
-        <App />
+        <ThemeProvider theme={theme}>
+          <App />
+        </ThemeProvider>
       </Provider>
-    </HistoryRouter>
+    </BrowserRouter>
+
   </React.StrictMode>,
 );

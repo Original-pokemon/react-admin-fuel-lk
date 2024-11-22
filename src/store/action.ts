@@ -6,6 +6,3 @@ export const setCards = createAction(`${NameSpace.Card}/getCards`);
 export const fetchCurrentLocation = createAction(
   `${NameSpace.App}/fetchCurrentLocation`,
 );
-export const redirectToRoute = createAction<AppRouteType>(
-  `${NameSpace.App}/redirectToRoute`,
-);

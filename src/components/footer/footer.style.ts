@@ -1,13 +1,13 @@
-import { css } from '@emotion/react';
-import { theme } from '#root/styles/theme';
+import { Box, BoxProps, styled } from '@mui/material';
 
-export const footerStyle = css({
+export const FooterStyledBox = styled(Box)<BoxProps>(({ theme }) => ({
   flex: '0 0 auto',
   display: 'flex',
+  height: '12vh',
   alignItems: 'center',
   justifyContent: 'space-between',
   padding: '30px',
-  backgroundColor: theme.bg.darkBg,
+  backgroundColor: theme.palette.primary.main,
 
   span: {
     '&:first-of-type': {
@@ -17,4 +17,4 @@ export const footerStyle = css({
       fontSize: '14px',
     },
   },
-});
+}))
