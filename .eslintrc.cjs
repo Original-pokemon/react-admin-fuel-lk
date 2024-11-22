@@ -9,7 +9,7 @@ module.exports = {
     "plugin:react-hooks/recommended",
     "plugin:unicorn/recommended",
     "plugin:prettier/recommended",
-    "plugin:storybook/recommended"
+    "plugin:storybook/recommended",
   ],
   parser: "@typescript-eslint/parser",
   parserOptions: {
@@ -17,7 +17,17 @@ module.exports = {
     sourceType: "module",
     project: "tsconfig.json",
   },
-  settings: { react: { version: "detect" } },
+  settings: {
+    react: { version: "detect" },
+    "import/resolver": {
+      "typescript": {
+        "alwaysTryTypes": true // Использовать TypeScript paths
+      },
+    },
+    "import/parsers": {
+      "@typescript-eslint/parser": [".ts", ".tsx"],
+    },
+  },
   plugins: [
     "@typescript-eslint",
     "react",
@@ -25,14 +35,14 @@ module.exports = {
     "prettier",
     "unicorn",
     "check-file",
-    "@emotion"
+    "@emotion",
   ],
   rules: {
     "@emotion/pkg-renaming": "error",
     "react/react-in-jsx-scope": "off",
     "react-refresh/only-export-components": "warn",
     "react/jsx-uses-react": "off",
-    "react/function-component-definition": "arrow-function",
+    "react/function-component-definition": "warn",
     "check-file/filename-naming-convention": [
       "error",
       {
@@ -49,5 +59,13 @@ module.exports = {
       },
     ],
     "unicorn/no-array-for-each": "off",
+    "import/extensions": [
+      "error",
+      "ignorePackages",
+      {
+        ts: "never",
+        tsx: "never",
+      },
+    ],
   },
 };
