@@ -1,4 +1,4 @@
-import { theme } from '#root/styles/theme';
+import theme from '#root/styles/theme';
 import { WalletTypeBoxStyled } from './wallet-type-cell.style';
 
 const walletTypeNames: { [key: number]: string } = {
@@ -13,11 +13,19 @@ const walletTypeColors: { [key: number]: string } = {
   3: theme.palette.success.light,
 };
 
-const WalletTypeCell = ({ value }: { value: number }) => {
+function WalletTypeCell({ value }: { value: number }) {
   const walletTypeName = walletTypeNames[value] || 'Неизвестный тип';
   const color = walletTypeColors[value] || 'default';
 
-  return <WalletTypeBoxStyled variant="outlined" sx={{ fontWeight: 600 }} backgroundColor={color as any}>{walletTypeName} </WalletTypeBoxStyled>;
-};
+  return (
+    <WalletTypeBoxStyled
+      variant="outlined"
+      sx={{ fontWeight: 600 }}
+      backgroundColor={color as string}
+    >
+      {walletTypeName}{' '}
+    </WalletTypeBoxStyled>
+  );
+}
 
 export default WalletTypeCell;

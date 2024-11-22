@@ -1,21 +1,27 @@
-import { Stack, } from '@mui/material';
-import { DataListItem, DataListItemProps } from './data-list-item/data-list-item';
-import { Spinner } from '#root/components/spinner/spinner';
+import { Stack } from '@mui/material';
+import Spinner from '#root/components/spinner/spinner';
+import {
+  DataListItem,
+  DataListItemProps as DataListItemProperties,
+} from './data-list-item/data-list-item';
 
-type DataListProps = {
-  items: DataListItemProps[],
-  isLoading?: boolean;
+type DataListProperties = {
+  items: DataListItemProperties[];
+  isLoading: boolean;
 };
 
-
-const DataList = ({ items, isLoading = false }: DataListProps) => {
+function DataList({ items, isLoading }: DataListProperties) {
   return (
-    <Stack spacing={2} alignItems={'center'}>
-      {isLoading ? <Spinner /> : items.map(({ id, header, body }) => (
-        <DataListItem id={id} header={header} body={body} />
-      ))}
-    </Stack >
+    <Stack spacing={2} alignItems="center">
+      {isLoading ? (
+        <Spinner fullscreen />
+      ) : (
+        items.map(({ id, header, body }) => (
+          <DataListItem id={id} header={header} body={body} key={id} />
+        ))
+      )}
+    </Stack>
   );
-};
+}
 
-export { DataList };
+export default DataList;

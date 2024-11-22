@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { Meta, StoryObj } from '@storybook/react';
-import { DataModal } from './data-modal';
 import { Button, ThemeProvider, Typography } from '@mui/material';
 import { theme } from '#root/styles/theme';
+import DataModal from './data-modal';
 
 const meta: Meta<typeof DataModal> = {
   title: 'DataView/DataModal',
@@ -22,7 +22,7 @@ export default meta;
 type Story = StoryObj<typeof DataModal>;
 
 export const DefaultModal: Story = {
-  render: (args) => {
+  render: (arguments_) => {
     const [open, setOpen] = useState(false);
 
     return (
@@ -30,9 +30,10 @@ export const DefaultModal: Story = {
         <Button variant="contained" onClick={() => setOpen(true)}>
           Открыть модальное окно
         </Button>
-        <DataModal {...args} open={open} onClose={() => setOpen(false)}>
+        <DataModal {...arguments_} open={open} onClose={() => setOpen(false)}>
           <Typography variant="body1">
-            Это содержимое модального окна. Вы можете разместить здесь любой контент.
+            Это содержимое модального окна. Вы можете разместить здесь любой
+            контент.
           </Typography>
         </DataModal>
       </>
@@ -41,11 +42,10 @@ export const DefaultModal: Story = {
   args: {
     title: 'Заголовок модального окна',
   },
-}
-
+};
 
 export const FullscreenModal: Story = {
-  render: (args) => {
+  render: () => {
     const [open, setOpen] = useState(false);
 
     return (
@@ -72,9 +72,8 @@ export const FullscreenModal: Story = {
   },
 };
 
-
 export const ModalWithActions: Story = {
-  render: (args) => {
+  render: () => {
     const [open, setOpen] = useState(false);
 
     const handleSave = () => {
@@ -120,8 +119,7 @@ export const ModalWithActions: Story = {
 };
 
 export const ModalWithoutCloseButton: Story = {
-  render: (args) => {
-
+  render: () => {
     const [open, setOpen] = useState(false);
 
     return (
@@ -149,7 +147,7 @@ export const ModalWithoutCloseButton: Story = {
 };
 
 export const ModalWithCustomStyles: Story = {
-  render: (args) => {
+  render: () => {
     const [open, setOpen] = useState(false);
 
     return (
@@ -186,12 +184,14 @@ export const ModalWithCustomStyles: Story = {
   },
 };
 
-
 export const ModalWithLongContent: Story = {
-  render: (args) => {
+  render: () => {
     const [open, setOpen] = useState(false);
 
-    const longText = Array.from({ length: 50 }, (_, i) => `Строка контента ${i + 1}`).join('\n');
+    const longText = Array.from(
+      { length: 50 },
+      (_, index) => `Строка контента ${index + 1}`,
+    ).join('\n');
 
     return (
       <>

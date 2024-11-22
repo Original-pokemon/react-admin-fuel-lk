@@ -1,21 +1,21 @@
-import { GridToolbar, DataGridProps, DataGrid, useGridApiRef, DEFAULT_GRID_AUTOSIZE_OPTIONS } from "@mui/x-data-grid";
-import { dataGridClasses, DataGridStyled } from "./data-table.style";
+import { GridToolbar, DataGridProps } from '@mui/x-data-grid';
+import { dataGridClasses, DataGridStyled } from './data-table.style';
 
 type Properties = {
-  name?: string
-  pageSizeOptions?: number[]
+  name?: string;
+  pageSizeOptions?: number[];
 } & DataGridProps;
 
-const DataTable = ({
+function DataTable({
   name,
-  density = "comfortable",
+  density = 'comfortable',
   columns,
   rows,
   filterModel,
   loading,
   pageSizeOptions = [10, 25, 50],
   ...rest
-}: Properties) => {
+}: Properties) {
   return (
     <DataGridStyled
       rows={rows}
@@ -31,7 +31,7 @@ const DataTable = ({
       density={density}
       slots={{
         toolbar: GridToolbar,
-        // footer: 
+        // footer:
       }}
       slotProps={{
         toolbar: {
@@ -41,7 +41,7 @@ const DataTable = ({
             delimiter: ';',
             utf8WithBom: true,
           },
-        }
+        },
       }}
       pageSizeOptions={pageSizeOptions}
       loading={loading}
@@ -64,8 +64,7 @@ const DataTable = ({
       disableVirtualization
       {...rest}
     />
-
   );
-};
+}
 
 export { DataTable };

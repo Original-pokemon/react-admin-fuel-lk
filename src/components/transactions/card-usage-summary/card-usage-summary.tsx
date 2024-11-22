@@ -1,24 +1,29 @@
-// components/CardUsageSummary.tsx
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
+import {
+  Table,
+  TableHead,
+  TableRow,
+  TableCell,
+  TableBody,
+} from '@mui/material';
 import { useAppSelector } from '#root/hooks/state';
 import { getAllTransactions } from '#root/store';
-import { Table, TableHead, TableRow, TableCell, TableBody } from '@mui/material';
 
 type CardData = {
-  cardnum: number;      // Номер карты
-  totalVolume: number;  // Общий объем
-  totalSumma: number;   // Общая сумма
+  cardnum: number; // Номер карты
+  totalVolume: number; // Общий объем
+  totalSumma: number; // Общая сумма
   transactionCount: number; // Количество транзакций
 };
 
-const CardUsageSummary = () => {
+function CardUsageSummary() {
   const transactions = useAppSelector(getAllTransactions);
 
   const cardData = useMemo(() => {
     const data: { [key: number]: CardData } = {};
 
     transactions.forEach((transaction) => {
-      const cardnum = transaction.cardnum;
+      const { cardnum, volume, summa } = transaction;
 
       if (!data[cardnum]) {
         data[cardnum] = {
@@ -29,8 +34,8 @@ const CardUsageSummary = () => {
         };
       }
 
-      data[cardnum].totalVolume += transaction.volume;
-      data[cardnum].totalSumma += transaction.summa;
+      data[cardnum].totalVolume += volume;
+      data[cardnum].totalSumma += summa;
       data[cardnum].transactionCount += 1;
     });
 
@@ -54,12 +59,14 @@ const CardUsageSummary = () => {
             <TableCell>{card.cardnum}</TableCell>
             <TableCell align="right">{card.transactionCount}</TableCell>
             <TableCell align="right">{card.totalVolume.toFixed(2)}</TableCell>
-            <TableCell align="right">₽ {card.totalSumma.toLocaleString()}</TableCell>
+            <TableCell align="right">
+              ₽ {card.totalSumma.toLocaleString()}
+            </TableCell>
           </TableRow>
         ))}
       </TableBody>
     </Table>
   );
-};
+}
 
 export default CardUsageSummary;

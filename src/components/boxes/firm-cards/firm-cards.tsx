@@ -1,8 +1,8 @@
 import React from 'react';
-import { CardType } from '#root/types';
+import type { CardType } from '#root/types';
 import InfoBox from '../info-box/info-box';
 
-type CardsSummaryProps = {
+type CardsSummaryProperties = {
   cards: CardType[];
 };
 
@@ -14,11 +14,14 @@ const TOTAL_MONTH_REMAIN_LABEL: string = 'Оставшийся месячный 
 const TOTAL_DAY_LIMIT_LABEL: string = 'Общий дневной лимит';
 const TOTAL_DAY_REMAIN_LABEL: string = 'Оставшийся дневной лимит';
 
-const CardsSummary: React.FC<CardsSummaryProps> = ({ cards }) => {
+const CardsSummary: React.FC<CardsSummaryProperties> = ({ cards }) => {
   const totalCards = cards.length;
-  const blockedCards = cards.filter(card => card.blocked).length;
+  const blockedCards = cards.filter((card) => card.blocked).length;
   const totalMonthLimit = cards.reduce((sum, card) => sum + card.monthlimit, 0);
-  const totalMonthRemain = cards.reduce((sum, card) => sum + card.monthremain, 0);
+  const totalMonthRemain = cards.reduce(
+    (sum, card) => sum + card.monthremain,
+    0,
+  );
   const totalDayLimit = cards.reduce((sum, card) => sum + card.daylimit, 0);
   const totalDayRemain = cards.reduce((sum, card) => sum + card.dayremain, 0);
 
@@ -31,12 +34,7 @@ const CardsSummary: React.FC<CardsSummaryProps> = ({ cards }) => {
     { [TOTAL_DAY_REMAIN_LABEL]: `${totalDayRemain} руб.` },
   ];
 
-  return (
-    <InfoBox
-      title="Топливные карты"
-      data={cardsData}
-    />
-  );
+  return <InfoBox title="Топливные карты" data={cardsData} />;
 };
 
 export default CardsSummary;

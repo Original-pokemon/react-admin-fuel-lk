@@ -1,8 +1,7 @@
-// DataTable.stories.tsx
-import { Meta, StoryObj, StoryFn, StoryContext } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
+import { GridColDef } from '@mui/x-data-grid';
+import generateMockFuelCardData from '#root/mock/fuel-card';
 import { DataTable } from './data-table';
-import { GridColDef } from "@mui/x-data-grid";
-import { generateMockFuelCardData } from '#root/mock/fuel-card';
 
 // Пример колонок для таблицы
 const columns: GridColDef[] = [
@@ -12,10 +11,15 @@ const columns: GridColDef[] = [
   { field: 'age', headerName: 'Age', type: 'number', width: 110 },
 ];
 
-type row = { id: number, lastName: string, firstName: string, age: number | null }
+type RowType = {
+  id: number;
+  lastName: string;
+  firstName: string;
+  age: number | null;
+};
 
 // Пример данных для строк
-const rows: row[] = [
+const rows: RowType[] = [
   { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35 },
   { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
   { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45 },
@@ -93,24 +97,22 @@ const rows: row[] = [
   { id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: null },
 ];
 
-
-type DataTableType = typeof DataTable
+type DataTableType = typeof DataTable;
 
 const meta: Meta<DataTableType> = {
   title: 'DataView/DataTable',
   component: DataTable,
-}
+};
 
-export default meta
+export default meta;
 
 type Story = StoryObj<DataTableType>;
-
 
 export const Default: Story = {
   args: {
     columns,
     rows,
-  }
+  },
 };
 export const Loading: Story = {
   name: 'Loading Data',
@@ -118,7 +120,7 @@ export const Loading: Story = {
     columns,
     rows: [],
     loading: true,
-  }
+  },
 };
 
 export const CustomDensity: Story = {
@@ -128,7 +130,7 @@ export const CustomDensity: Story = {
     columns,
     rows,
     density: 'compact',
-  }
+  },
 };
 
 export const OnRowClickExample: Story = {
@@ -137,5 +139,5 @@ export const OnRowClickExample: Story = {
     columns,
     rows,
     onRowClick: (row) => alert(`Row clicked: ${row.id}`),
-  }
+  },
 };

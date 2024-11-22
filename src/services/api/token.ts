@@ -11,7 +11,10 @@ export const saveToken = (token: string, rememberMe: boolean): void => {
 };
 
 export const getToken = (): string | null => {
-  return (localStorage.getItem(AUTH_TOKEN_KEY_NAME) || sessionStorage.getItem(AUTH_TOKEN_KEY_NAME));
+  return (
+    localStorage.getItem(AUTH_TOKEN_KEY_NAME) ||
+    sessionStorage.getItem(AUTH_TOKEN_KEY_NAME)
+  );
 };
 
 export const dropToken = (): void => {

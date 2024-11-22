@@ -1,30 +1,30 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { AuthInfoType, StatusType } from "#root/types";
-import { NameSpace, Status } from "#root/const";
-import { postAuthData, fetchAuthInfo } from './thunk'
-import { dropToken } from "#root/services/api/token";
-
-
+/* eslint-disable no-param-reassign */
+import { createSlice } from '@reduxjs/toolkit';
+import type { AuthInfoType, StatusType } from '#root/types';
+import { NameSpace, Status } from '#root/const';
+import { dropToken } from '#root/services/api/token';
+import { postAuthData, fetchAuthInfo } from './thunk';
 
 type InitialStateType = {
-  status: StatusType,
-  authData?: AuthInfoType,
-}
+  status: StatusType;
+  authData?: AuthInfoType;
+};
 
 const initialState: InitialStateType = {
   status: Status.Idle,
   authData: undefined,
-}
+};
 
 const authDataSlice = createSlice({
   name: NameSpace.Auth,
   initialState,
   reducers: {
     logout(state) {
-      dropToken()
-      state.authData = undefined
-      state.status = Status.Idle
-    }
+      dropToken();
+
+      state.authData = undefined;
+      state.status = Status.Idle;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -47,10 +47,10 @@ const authDataSlice = createSlice({
       })
       .addCase(fetchAuthInfo.rejected, (state) => {
         state.status = Status.Error;
-      })
-  }
-})
+      });
+  },
+});
 
-export const { logout } = authDataSlice.actions
+export const { logout } = authDataSlice.actions;
 
-export { authDataSlice }
+export { authDataSlice };

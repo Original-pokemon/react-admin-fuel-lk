@@ -1,15 +1,13 @@
-import axios, { AxiosError, AxiosInstance, AxiosResponse } from "axios";
-import { toast } from "react-toastify";
-import { StatusCodes } from "http-status-codes";
-import { BACKEND_URL, REQUEST_TIMEOUT } from "./const";
-import { getToken } from "./token";
-
+import axios, { AxiosError, AxiosInstance, AxiosResponse } from 'axios';
+import { toast } from 'react-toastify';
+import { StatusCodes } from 'http-status-codes';
+import { BACKEND_URL, REQUEST_TIMEOUT } from './const';
+import { getToken } from './token';
 
 type DetailMessageType = {
   type: string;
   message: string;
 };
-
 
 const StatusCodeMapping: Record<number, boolean> = {
   [StatusCodes.BAD_REQUEST]: true,
@@ -26,8 +24,8 @@ const createAPI = (): AxiosInstance => {
     baseURL: BACKEND_URL,
     timeout: REQUEST_TIMEOUT,
     headers: {
-      "Content-Type": "application/json",
-    }
+      'Content-Type': 'application/json',
+    },
   });
 
   api.interceptors.response.use(
@@ -43,14 +41,16 @@ const createAPI = (): AxiosInstance => {
       }
       if (error.response && shouldDisplayError(error.response)) {
         const ErrorMessage = {
-          [StatusCodes.BAD_REQUEST]: "Некорректные данные.",
-          [StatusCodes.UNAUTHORIZED]: "Неверные имя пользователя или пароль.",
-          [StatusCodes.NOT_FOUND]: "Страница не найдена.",
-          [StatusCodes.INTERNAL_SERVER_ERROR]: "Внутренняя ошибка сервера.",
+          [StatusCodes.BAD_REQUEST]: 'Некорректные данные.',
+          [StatusCodes.UNAUTHORIZED]: 'Неверные имя пользователя или пароль.',
+          [StatusCodes.NOT_FOUND]: 'Страница не найдена.',
+          [StatusCodes.INTERNAL_SERVER_ERROR]: 'Внутренняя ошибка сервера.',
         };
 
         if (error.response.status in ErrorMessage) {
-          toast.warn<string>(ErrorMessage[error.response.status as keyof typeof ErrorMessage]);
+          toast.warn<string>(
+            ErrorMessage[error.response.status as keyof typeof ErrorMessage],
+          );
         }
       }
 
@@ -62,6 +62,7 @@ const createAPI = (): AxiosInstance => {
     const token = getToken();
 
     if (token && config.headers) {
+      // eslint-disable-next-line no-param-reassign
       config.headers.Authorization = token;
     }
 

@@ -1,28 +1,25 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
-import { Provider } from "react-redux";
-import App from "./app.tsx";
-import store from "./store/index.ts";
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import { Provider } from 'react-redux';
+import { BrowserRouter } from 'react-router-dom';
+import { ThemeProvider } from '@emotion/react';
+import App from './app';
+import store from './store/index';
 
-import {
-  BrowserRouter,
-} from "react-router-dom";
-import { ThemeProvider } from "@emotion/react";
-import { theme } from "./styles/theme.ts";
+import theme from './styles/theme';
 
 const root = ReactDOM.createRoot(
-  document.querySelector("#root") as HTMLElement,
+  document.querySelector('#root') as HTMLElement,
 );
 
 root.render(
   <React.StrictMode>
-    <BrowserRouter >
+    <BrowserRouter>
       <Provider store={store}>
         <ThemeProvider theme={theme}>
           <App />
         </ThemeProvider>
       </Provider>
     </BrowserRouter>
-
   </React.StrictMode>,
 );

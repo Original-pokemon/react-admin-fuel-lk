@@ -1,6 +1,6 @@
-import { NameSpace, Status } from '#root/const';
 import { createSelector } from '@reduxjs/toolkit';
-import { InitialStateType } from '../../reducer'
+import { NameSpace, Status } from '#root/const';
+import type { InitialStateType } from '../../reducer';
 
 type AppStateType = Pick<InitialStateType, typeof NameSpace.App>;
 
@@ -11,7 +11,8 @@ export const getAppStatus = createSelector(
     isIdle: status === Status.Idle,
     isLoading: status === Status.Loading,
     isError: status === Status.Error,
-    isSuccess: status === Status.Success
-  })
-)
-export const getNomenclatureInfo = (state: AppStateType) => state[NameSpace.App].nomenclature
+    isSuccess: status === Status.Success,
+  }),
+);
+export const getNomenclatureInfo = (state: AppStateType) =>
+  state[NameSpace.App].nomenclature;

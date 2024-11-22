@@ -1,10 +1,10 @@
-import { Box } from "@mui/material";
+import { Box } from '@mui/material';
 
-type DrawerActionsProps = {
+type DrawerActionsProperties = {
   children: React.ReactNode;
 };
 
-const DrawerActions: React.FC<DrawerActionsProps> = ({ children }) => (
+const DrawerActions: React.FC<DrawerActionsProperties> = ({ children }) => (
   <Box
     sx={{
       p: 2,
@@ -17,4 +17,4 @@ const DrawerActions: React.FC<DrawerActionsProps> = ({ children }) => (
 );
 
 export type DrawerActionsType = ReturnType<typeof DrawerActions>;
-export default DrawerActions
+export default DrawerActions;

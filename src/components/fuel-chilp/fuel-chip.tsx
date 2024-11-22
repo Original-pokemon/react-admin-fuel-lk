@@ -1,13 +1,12 @@
-import { useAppDispatch, useAppSelector } from '#root/hooks/state';
-import { fetchNomenclatureData, getNomenclatureInfo } from '#root/store';
 import { Chip, getContrastRatio, useTheme } from '@mui/material';
-import { useEffect } from 'react';
+import { useAppSelector } from '#root/hooks/state';
+import { getNomenclatureInfo } from '#root/store';
 
-type FuelChipProps = {
+type FuelChipProperties = {
   fuelId: number;
 };
 
-const FuelChip = ({ fuelId }: FuelChipProps) => {
+function FuelChip({ fuelId }: FuelChipProperties) {
   const theme = useTheme();
   const nomenclature = useAppSelector(getNomenclatureInfo);
 
@@ -30,6 +29,6 @@ const FuelChip = ({ fuelId }: FuelChipProps) => {
       }}
     />
   );
-};
+}
 
 export default FuelChip;

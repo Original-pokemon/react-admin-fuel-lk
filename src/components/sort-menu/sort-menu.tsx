@@ -1,5 +1,11 @@
 import React, { useState } from 'react';
-import { Button, Grid2 as Grid, Menu, MenuItem, Typography } from '@mui/material';
+import {
+  Button,
+  Grid2 as Grid,
+  Menu,
+  MenuItem,
+  Typography,
+} from '@mui/material';
 import { ArrowDropDown, ArrowDropUp } from '@mui/icons-material';
 
 type SortOption = {
@@ -7,22 +13,27 @@ type SortOption = {
   value: string;
 };
 
-type SortMenuProps = {
+type SortMenuProperties = {
   label: string;
   onSortChange: (option: string) => void;
   currentSort: string;
   sortOptions: SortOption[];
 };
 
-const SortMenu = ({ label, onSortChange, currentSort, sortOptions }: SortMenuProps) => {
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+function SortMenu({
+  label,
+  onSortChange,
+  currentSort,
+  sortOptions,
+}: SortMenuProperties) {
+  const [anchorElement, setAnchorElement] = useState<null | HTMLElement>(null);
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
+    setAnchorElement(event.currentTarget);
   };
 
   const handleClose = () => {
-    setAnchorEl(null);
+    setAnchorElement(null);
   };
 
   const handleSortChange = (option: string) => {
@@ -30,7 +41,8 @@ const SortMenu = ({ label, onSortChange, currentSort, sortOptions }: SortMenuPro
     handleClose();
   };
 
-  const currentSortLabel = sortOptions.find((opt) => opt.value === currentSort)?.label || 'Sort';
+  const currentSortLabel =
+    sortOptions.find((opt) => opt.value === currentSort)?.label || 'Sort';
 
   return (
     <Grid container>
@@ -38,16 +50,22 @@ const SortMenu = ({ label, onSortChange, currentSort, sortOptions }: SortMenuPro
         aria-controls="sort-menu"
         aria-haspopup="true"
         onClick={handleClick}
-        endIcon={anchorEl ? <ArrowDropUp /> : <ArrowDropDown />}
+        endIcon={anchorElement ? <ArrowDropUp /> : <ArrowDropDown />}
       >
-        <Typography variant="body2" width={{ xs: 84, sm: 160 }} sx={{ wordWrap: 'break-word' }}>{label}: {currentSortLabel}</Typography>
+        <Typography
+          variant="body2"
+          width={{ xs: 84, sm: 160 }}
+          sx={{ wordWrap: 'break-word' }}
+        >
+          {label}: {currentSortLabel}
+        </Typography>
       </Button>
 
       <Menu
         id="sort-menu"
-        anchorEl={anchorEl}
+        anchorEl={anchorElement}
         keepMounted
-        open={Boolean(anchorEl)}
+        open={Boolean(anchorElement)}
         onClose={handleClose}
       >
         {sortOptions.map((option) => (
@@ -62,6 +80,6 @@ const SortMenu = ({ label, onSortChange, currentSort, sortOptions }: SortMenuPro
       </Menu>
     </Grid>
   );
-};
+}
 
 export default SortMenu;

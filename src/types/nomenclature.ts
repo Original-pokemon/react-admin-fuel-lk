@@ -1,4 +1,4 @@
 export type NomenclatureType = {
-  fuelid: number,
-  fuelname: string,
-}
+  fuelid: number;
+  fuelname: string;
+};

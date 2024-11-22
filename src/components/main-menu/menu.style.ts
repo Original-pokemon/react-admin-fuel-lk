@@ -1,7 +1,7 @@
 import { css } from '@emotion/react';
-import { theme } from '#root/styles/theme';
+import theme from '#root/styles/theme';
 
-export const menuStyle = css({
+const menuStyle = css({
   '.item': {
     display: 'flex',
     flexDirection: 'column',
@@ -16,9 +16,6 @@ export const menuStyle = css({
         display: 'none',
       },
     },
-
-
-
 
     '.listItem': {
       display: 'flex',
@@ -43,3 +40,5 @@ export const menuStyle = css({
     },
   },
 });
+
+export default menuStyle;

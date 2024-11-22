@@ -3,10 +3,7 @@ import {
   Person as PersonIcon,
   Logout,
 } from '@mui/icons-material';
-import Logo from "../logo/logo";
-import { useAppDispatch, useAppSelector } from "#root/hooks/state";
-import { getFirmName, getFirmStatus } from "#root/store/slice/firm/selectors";
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 import {
   AppBar,
   Toolbar,
@@ -20,38 +17,40 @@ import {
   useTheme,
   Box,
 } from '@mui/material';
-import { logout } from "#root/store";
-import { fetchFirmData } from "#root/store/slice/firm/thunk";
+import { useAppDispatch, useAppSelector } from '#root/hooks/state';
+import { getFirmName, getFirmStatus } from '#root/store/slice/firm/selectors';
+import { logout } from '#root/store';
+import { fetchFirmData } from '#root/store/slice/firm/thunk';
+import Logo from '../logo/logo';
 
-type NavbarProps = {
+type NavbarProperties = {
   className?: string;
   onMenuClick: () => void;
 };
 
+function Navbar({ onMenuClick, className }: NavbarProperties) {
+  const dispatch = useAppDispatch();
+  const { isSuccess, isIdle } = useAppSelector(getFirmStatus);
+  const firmName = useAppSelector(getFirmName);
 
-const Navbar = ({ onMenuClick, className }: NavbarProps) => {
-  const dispatch = useAppDispatch()
-  const { isSuccess, isIdle } = useAppSelector(getFirmStatus)
-  const firmName = useAppSelector(getFirmName)
-
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [anchorElement, setAnchorElement] = useState<null | HTMLElement>(null);
 
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
+    setAnchorElement(event.currentTarget);
   };
 
   const handleCloseUserMenu = () => {
-    setAnchorEl(null);
+    setAnchorElement(null);
   };
 
   useEffect(() => {
     if (!firmName && isIdle) {
-      dispatch(fetchFirmData())
+      dispatch(fetchFirmData());
     }
-  }, [dispatch, isSuccess, isIdle])
+  }, [dispatch, isSuccess, isIdle]);
 
   return (
     <AppBar position="static" className={className}>
@@ -81,7 +80,7 @@ const Navbar = ({ onMenuClick, className }: NavbarProps) => {
         </Tooltip>
         <Menu
           id="menu-nav-bar"
-          anchorEl={anchorEl}
+          anchorEl={anchorElement}
           anchorOrigin={{
             vertical: 'top',
             horizontal: 'right',
@@ -91,7 +90,7 @@ const Navbar = ({ onMenuClick, className }: NavbarProps) => {
             vertical: 'top',
             horizontal: 'right',
           }}
-          open={Boolean(anchorEl)}
+          open={Boolean(anchorElement)}
           onClose={handleCloseUserMenu}
         >
           <MenuItem
@@ -109,6 +108,6 @@ const Navbar = ({ onMenuClick, className }: NavbarProps) => {
       </Toolbar>
     </AppBar>
   );
-};
+}
 
 export default Navbar;

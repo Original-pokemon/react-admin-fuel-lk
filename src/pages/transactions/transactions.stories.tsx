@@ -4,31 +4,33 @@ import { MemoryRouter } from 'react-router-dom';
 import configureMockStore from 'redux-mock-store';
 import { NameSpace, Status } from '#root/const';
 import { generateMockNomenclature } from '#root/mock/nomenclature';
-import Transitions from './transactions';
 import { generateMockCardTransactionList } from '#root/mock/card-transaction';
+import Transitions from './transactions';
 
 const mockStore = configureMockStore();
 
-const transaction = generateMockCardTransactionList(100)
+const transaction = generateMockCardTransactionList(100);
 
-const transactionEntities = Object.entries(transaction).map(([key, value]) => ({ id: key, ...value }))
+const transactionEntities = Object.entries(transaction).map(([key, value]) => ({
+  id: key,
+  ...value,
+}));
 
 const initialState = {
   [NameSpace.App]: {
-    nomenclature: generateMockNomenclature()
+    nomenclature: generateMockNomenclature(),
   },
   [NameSpace.Transaction]: {
-    ids: [...Array(100).keys()],
+    ids: [...Array.from({ length: 100 }).keys()],
     status: Status.Success,
-    entities: transactionEntities
+    entities: transactionEntities,
   },
   [NameSpace.Firm]: {
-    status: Status.Success
-  }
+    status: Status.Success,
+  },
 };
 
 type TransactionPageType = typeof Transitions;
-
 
 const store = mockStore(initialState);
 
@@ -47,10 +49,10 @@ const meta: Meta<TransactionPageType> = {
   tags: ['autodocs'],
 };
 
-export default meta
+export default meta;
 
 type Story = StoryObj<TransactionPageType>;
 
 export const Default: Story = {
   args: {},
-}
+};

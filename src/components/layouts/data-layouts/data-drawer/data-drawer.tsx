@@ -1,16 +1,10 @@
-import {
-  Drawer,
-  SxProps,
-  Theme,
-  useMediaQuery,
-  Box,
-} from '@mui/material';
+import { Drawer, SxProps, Theme, useMediaQuery, Box } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import DrawerHeader, { DrawerHeaderType } from './drawer-header';
 import DrawerActions, { DrawerActionsType } from './drawer-actions';
 import DrawerBody, { DrawerBodyType } from './drawer-body';
 
-type DataDrawerProps = {
+type DataDrawerProperties = {
   open: boolean;
   onClose: () => void;
   direction?: 'left' | 'right' | 'top' | 'bottom';
@@ -20,15 +14,15 @@ type DataDrawerProps = {
   children: DrawerHeaderType | DrawerBodyType | DrawerActionsType;
 };
 
-const DataDrawer = ({
+function DataDrawer({
   open,
   onClose,
   direction = 'right',
   fullScreen = false,
   maxSize,
   sx,
-  children
-}: DataDrawerProps) => {
+  children,
+}: DataDrawerProperties) {
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
@@ -42,18 +36,24 @@ const DataDrawer = ({
       return maxSize;
     }
     switch (maxSize) {
-      case 'xs':
+      case 'xs': {
         return theme.breakpoints.values.xs;
-      case 'sm':
+      }
+      case 'sm': {
         return theme.breakpoints.values.sm;
-      case 'md':
+      }
+      case 'md': {
         return theme.breakpoints.values.md;
-      case 'lg':
+      }
+      case 'lg': {
         return theme.breakpoints.values.lg;
-      case 'xl':
+      }
+      case 'xl': {
         return theme.breakpoints.values.xl;
-      default:
+      }
+      default: {
         return theme.breakpoints.values.sm;
+      }
     }
   };
 
@@ -82,7 +82,7 @@ const DataDrawer = ({
       </Box>
     </Drawer>
   );
-};
+}
 
 DataDrawer.Header = DrawerHeader;
 DataDrawer.Body = DrawerBody;

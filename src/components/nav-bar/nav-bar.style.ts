@@ -1,6 +1,6 @@
 import { Box, BoxProps, styled } from '@mui/material';
 
-export const NavBarStyledBox = styled(Box)<BoxProps>((({ theme }) => ({
+export const NavBarStyledBox = styled(Box)<BoxProps>(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between',
@@ -38,4 +38,4 @@ export const NavBarStyledBox = styled(Box)<BoxProps>((({ theme }) => ({
       },
     },
   },
-})))
+}));

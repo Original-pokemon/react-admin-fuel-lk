@@ -1,8 +1,13 @@
-// components/FuelSummary.tsx
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
+import {
+  Table,
+  TableHead,
+  TableRow,
+  TableCell,
+  TableBody,
+} from '@mui/material';
 import { useAppSelector } from '#root/hooks/state';
 import { getAllTransactions, getNomenclatureInfo } from '#root/store';
-import { Table, TableHead, TableRow, TableCell, TableBody } from '@mui/material';
 
 type FuelData = {
   fuelId: number;
@@ -12,7 +17,7 @@ type FuelData = {
   averagePrice: number;
 };
 
-const FuelSummary = () => {
+function FuelSummary() {
   const transactions = useAppSelector(getAllTransactions);
   const nomenclature = useAppSelector(getNomenclatureInfo);
 
@@ -21,7 +26,9 @@ const FuelSummary = () => {
 
     transactions.forEach((transaction) => {
       const fuelId = transaction.fuelid;
-      const fuelName = nomenclature?.find((n) => n.fuelid === fuelId)?.fuelname || 'Неизвестно';
+      const fuelName =
+        nomenclature?.find((n) => n.fuelid === fuelId)?.fuelname ||
+        'Неизвестно';
 
       if (!data[fuelId]) {
         data[fuelId] = {
@@ -60,13 +67,17 @@ const FuelSummary = () => {
           <TableRow key={fuel.fuelId}>
             <TableCell>{fuel.fuelName}</TableCell>
             <TableCell align="right">{fuel.totalVolume.toFixed(2)}</TableCell>
-            <TableCell align="right">₽ {fuel.totalSumma.toLocaleString()}</TableCell>
-            <TableCell align="right">₽ {fuel.averagePrice.toFixed(2)}</TableCell>
+            <TableCell align="right">
+              ₽ {fuel.totalSumma.toLocaleString()}
+            </TableCell>
+            <TableCell align="right">
+              ₽ {fuel.averagePrice.toFixed(2)}
+            </TableCell>
           </TableRow>
         ))}
       </TableBody>
     </Table>
   );
-};
+}
 
 export default FuelSummary;

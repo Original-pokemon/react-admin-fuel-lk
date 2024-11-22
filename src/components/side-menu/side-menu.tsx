@@ -1,29 +1,29 @@
-import React from 'react';
-import { MainMenu } from '../main-menu/main-menu';
+import MainMenu, { MenuType } from '../main-menu/main-menu';
 import DataDrawer from '../layouts/data-layouts/data-drawer/data-drawer';
 import Logo from '../logo/logo';
 
-type SideMenuProps = {
+type SideMenuPropertiesType = {
   open: boolean;
   onClose: () => void;
-  menu: any;
+  menu: MenuType;
 };
 
-const SideMenu: React.FC<SideMenuProps> = ({ open, onClose, menu }) => {
+function SideMenu({ open, onClose, menu }: SideMenuPropertiesType) {
   return (
     <DataDrawer
-      direction='left'
+      direction="left"
       maxSize="sm"
       sx={{ width: 320 }}
       open={open}
-      onClose={onClose}>
+      onClose={onClose}
+    >
       <DataDrawer.Header title={<Logo />} onClose={onClose} />
 
       <DataDrawer.Body>
-        <MainMenu menu={menu} onItemClick={onClose} />
+        <MainMenu menu={menu} />
       </DataDrawer.Body>
     </DataDrawer>
   );
-};
+}
 
 export default SideMenu;

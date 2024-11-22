@@ -7,15 +7,10 @@ const buttonStyle = css({
   cursor: 'pointer',
 });
 
-
 export const CardsStyledBox = styled(Box)<BoxProps>(() => ({
   alignItems: 'center',
   gap: '20px',
   marginBottom: '20px',
 
   button: buttonStyle,
-}))
-
-
-
-
+}));

@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react';
-import { Spinner } from "./spinner";
+import { Spinner } from './spinner';
 
 export default {
   component: Spinner,
@@ -10,11 +10,11 @@ type Story = StoryObj<typeof Spinner>;
 export const DefaultSpinner: Story = {
   args: {
     size: 40,
-  }
+  },
 };
 
 export const FullScreen: Story = {
-  name: "Full screen spinner",
+  name: 'Full screen spinner',
   args: {
     fullscreen: true,
     size: 100,

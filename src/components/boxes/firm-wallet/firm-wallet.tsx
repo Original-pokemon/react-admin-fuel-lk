@@ -1,40 +1,40 @@
-import React, { useEffect } from 'react';
-import { FuelWalletType } from '#root/types';
-import InfoBox from '../info-box/info-box';
-import { useAppDispatch, useAppSelector } from '#root/hooks/state';
-import { getAppStatus, getNomenclatureInfo, fetchNomenclatureData } from '#root/store';
-import { Spinner } from '#root/components/spinner/spinner';
+import { useEffect } from "react";
+import { FuelWalletType } from "#root/types";
+import { useAppDispatch, useAppSelector } from "#root/hooks/state";
+import {
+  getAppStatus,
+  getNomenclatureInfo,
+  fetchNomenclatureData,
+} from "#root/store";
+import Spinner from "#root/components/spinner/spinner";
+import InfoBox from "../info-box/info-box";
 
-
-const FirmWalletDisplay: React.FC<{ fuelWallet: FuelWalletType[] }> = ({ fuelWallet }) => {
+function FirmWalletDisplay({ fuelWallet }: { fuelWallet: FuelWalletType[] }) {
   const dispatch = useAppDispatch();
   const nomenclature = useAppSelector(getNomenclatureInfo);
   const { isIdle } = useAppSelector(getAppStatus);
 
   useEffect(() => {
     if (!nomenclature && isIdle) {
-      dispatch(fetchNomenclatureData())
+      dispatch(fetchNomenclatureData());
     }
-  }, [nomenclature, dispatch]);
+  }, [nomenclature, dispatch, isIdle]);
 
   if (!nomenclature) {
-    return <Spinner />;
+    return <Spinner fullscreen={false} />;
   }
 
   const walletData = fuelWallet.map((wallet) => {
-    const fuelNomenclature = nomenclature.find(nom => nom.fuelid === wallet.fuelid);
+    const fuelNomenclature = nomenclature.find(
+      (nom) => nom.fuelid === wallet.fuelid,
+    );
 
     return {
-      [`${fuelNomenclature ? fuelNomenclature.fuelname : 'Неизвестное топливо'}`]: `${wallet.remain} литров`,
+      [`${fuelNomenclature ? fuelNomenclature.fuelname : "Неизвестное топливо"}`]: `${wallet.remain} литров`,
     };
   });
 
-  return (
-    <InfoBox
-      title="Баланс топлива"
-      data={walletData}
-    />
-  );
-};
+  return <InfoBox title="Баланс топлива" data={walletData} />;
+}
 
 export default FirmWalletDisplay;

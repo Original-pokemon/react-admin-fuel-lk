@@ -1,27 +1,33 @@
-// components/CardsSummary.tsx
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
+import { Grid, Card, CardContent, Typography } from '@mui/material';
 import { useAppSelector } from '#root/hooks/state';
 import { getFirmCards } from '#root/store'; // Предполагается, что вы получаете карты из Redux
-import { Grid, Card, CardContent, Typography } from '@mui/material';
 
-const CardsSummary = () => {
+function CardsSummary() {
   const cards = useAppSelector(getFirmCards);
 
-  const { totalCards, activeCards, blockedCards, totalFuelVolume } = useMemo(() => {
-    const totalCards = cards.length;
-    const blockedCards = cards.filter((card) => card.blocked).length;
-    const activeCards = totalCards - blockedCards;
+  const { totalCards, activeCards, blockedCards, totalFuelVolume } =
+    useMemo(() => {
+      const totalCardsResult = cards.length;
+      const blockedCardsResult = cards.filter((card) => card.blocked).length;
+      const activeCardsResult = totalCardsResult - blockedCardsResult;
 
-    // Общий объем доступного топлива по всем картам
-    let totalFuelVolume = 0;
-    cards.forEach((card) => {
-      card.fuels.forEach((fuel) => {
-        totalFuelVolume += fuel.volume;
+      // Общий объем доступного топлива по всем картам
+      let totalFuelVolumeResult = 0;
+
+      cards.forEach((card) => {
+        card.fuels.forEach((fuel) => {
+          totalFuelVolumeResult += fuel.volume;
+        });
       });
-    });
 
-    return { totalCards, activeCards, blockedCards, totalFuelVolume };
-  }, [cards]);
+      return {
+        totalCards: totalCardsResult,
+        activeCards: activeCardsResult,
+        blockedCards: blockedCardsResult,
+        totalFuelVolume: totalFuelVolumeResult,
+      };
+    }, [cards]);
 
   return (
     <Grid container spacing={2} mb={2}>
@@ -67,6 +73,6 @@ const CardsSummary = () => {
       </Grid>
     </Grid>
   );
-};
+}
 
 export default CardsSummary;

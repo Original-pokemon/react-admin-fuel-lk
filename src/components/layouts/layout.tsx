@@ -1,37 +1,37 @@
-import { MainMenu } from "../main-menu/main-menu";
-import Navbar from "../nav-bar/nav-bar";
-import { Outlet, useSearchParams } from "react-router-dom";
+import { Outlet, useSearchParams } from 'react-router-dom';
 import {
   Home as HomeIcon,
   CreditCard as CreditCardIcon,
   Receipt as ReceiptIcon,
   Map as MapIcon,
-} from "@mui/icons-material";
-import { AppRoute } from "#root/const";
-import Footer from "../footer/footer";
-import { LayoutStyleBox } from "./layout.style";
-import { Box, Container, useMediaQuery, useTheme } from "@mui/material";
-import { getFirmCardById } from "#root/store";
-import { useAppSelector } from "#root/hooks/state";
-import { createPortal } from "react-dom";
-import { CardModal } from "../cards/card-modal/card-modal";
-import { useState } from "react";
-import SideMenu from "../side-menu/side-menu";
+} from '@mui/icons-material';
+import { Box, useMediaQuery, useTheme } from '@mui/material';
+import { createPortal } from 'react-dom';
+import { useState } from 'react';
+import { getFirmCardById } from '#root/store';
+import { useAppSelector } from '#root/hooks/state';
+import AppRoute from '#root/const/app-route';
+import MainMenu from '../main-menu/main-menu';
+import Navbar from '../nav-bar/nav-bar';
+import Footer from '../footer/footer';
+import LayoutStyleBox from './layout.style';
+import CardModal from '../cards/card-modal/card-modal';
+import SideMenu from '../side-menu/side-menu';
 
 const menu = [
   {
     id: 1,
-    title: "Основное",
+    title: 'Основное',
     listItems: [
       {
         id: 1,
-        title: "Главная",
+        title: 'Главная',
         url: AppRoute.Main,
         icon: <HomeIcon />,
       },
       {
         id: 4,
-        title: "Карта АЗС",
+        title: 'Карта АЗС',
         url: AppRoute.AzsMap,
         icon: <MapIcon />,
       },
@@ -39,17 +39,17 @@ const menu = [
   },
   {
     id: 2,
-    title: "О картах",
+    title: 'О картах',
     listItems: [
       {
         id: 1,
-        title: "Карты",
+        title: 'Карты',
         url: AppRoute.Cards,
         icon: <CreditCardIcon />,
       },
       {
         id: 2,
-        title: "Транзакции",
+        title: 'Транзакции',
         url: AppRoute.Transaction,
         icon: <ReceiptIcon />,
       },
@@ -57,9 +57,9 @@ const menu = [
   },
 ];
 
-export const Layout = () => {
-  const [searchParams] = useSearchParams()
-  const cardnumber = Number(searchParams.get('modalcardnum'));
+function Layout() {
+  const [searchParameters] = useSearchParams();
+  const cardnumber = Number(searchParameters.get('modalcardnum'));
   const card = useAppSelector((state) => getFirmCardById(state, cardnumber));
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
@@ -96,5 +96,7 @@ export const Layout = () => {
       {card && createPortal(<CardModal card={card} />, document.body)}
       <Footer className="footer" />
     </LayoutStyleBox>
-  )
+  );
 }
+
+export default Layout;

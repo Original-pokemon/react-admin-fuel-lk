@@ -1,53 +1,50 @@
-import { useEffect } from 'react';
-import { useAppDispatch, useAppSelector } from '#root/hooks/state';
-import { fetchFirmData, getFirmCardById } from '#root/store';
-import {
-  Typography,
-  Stack,
-  Avatar,
-} from '@mui/material';
-import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
-import { DataModal } from '#root/components/layouts/data-layouts/data-modal/data-modal';
-import { LimitCell } from '../cards-table/cells/limit-cell/limit-cell';
+import { Typography, Stack, Avatar } from '@mui/material';
+import { useSearchParams } from 'react-router-dom';
+import DataModal from '#root/components/layouts/data-layouts/data-modal/data-modal';
+import FuelChip from '#root/components/fuel-chilp/fuel-chip';
+import { CardType } from '#root/types';
+import LimitCell from '../cards-table/cells/limit-cell/limit-cell';
 import { DateCell } from '../cards-table/cells/date-cell/date-cell';
 import WalletTypeCell from '../cards-table/cells/wallet-type-cell/wallet-type-cell';
 import StatusCell from '../cards-table/cells/status-cell/status-cell';
-import { AppRoute } from '#root/const';
-import FuelChip from '#root/components/fuel-chilp/fuel-chip';
 import InfoBlock from './info-block';
-import { CardType } from '#root/types';
 
-type CardModaProps = {
-  card: CardType
-}
+type CardModalProperties = {
+  card: CardType;
+};
 
-const CardModal = ({ card }: CardModaProps) => {
-  const [_, setSearchParams] = useSearchParams()
+function CardModal({ card }: CardModalProperties) {
+  const [, setSearchParameters] = useSearchParams();
 
   const handleClose = () => {
-    setSearchParams((prevValue) => {
-      prevValue.delete('modalcardnum');
+    setSearchParameters((previousValue) => {
+      previousValue.delete('modalcardnum');
 
-      return prevValue
-    })
+      return previousValue;
+    });
   };
 
   return (
     <DataModal
-      open={true}
+      open
       onClose={handleClose}
       title={
         <Stack
           direction="row"
           alignItems="center"
           spacing={1}
-          bgcolor='background.default'
+          bgcolor="background.default"
           borderRadius={1}
           p={1}
           gap={1}
         >
           <Avatar
-            sx={{ bgcolor: 'primary.main', width: '2.8rem', height: '1.8rem', borderRadius: '0.28rem', }}
+            sx={{
+              bgcolor: 'primary.main',
+              width: '2.8rem',
+              height: '1.8rem',
+              borderRadius: '0.28rem',
+            }}
             variant="rounded"
             src="/images/card.png"
           />
@@ -56,7 +53,6 @@ const CardModal = ({ card }: CardModaProps) => {
       }
     >
       <Stack spacing={2} sx={{ p: 2 }}>
-
         {/* Детали карты */}
         <InfoBlock
           title="Детали карты"
@@ -89,7 +85,9 @@ const CardModal = ({ card }: CardModaProps) => {
           rows={[
             {
               label: 'Дневной лимит',
-              value: <LimitCell limit={card.daylimit} remain={card.dayremain} />,
+              value: (
+                <LimitCell limit={card.daylimit} remain={card.dayremain} />
+              ),
             },
             {
               label: 'Месячный лимит',
@@ -103,7 +101,6 @@ const CardModal = ({ card }: CardModaProps) => {
           borderBetweenRows
         />
 
-
         {/* Секция доступного топлива */}
         <InfoBlock
           title="Доступное топливо"
@@ -111,9 +108,7 @@ const CardModal = ({ card }: CardModaProps) => {
             card.fuels && card.fuels.length > 0
               ? card.fuels.map((fuel) => ({
                 label: <FuelChip fuelId={fuel.fuelid} />,
-                value: (
-                  <Typography variant="body1">{fuel.volume}</Typography>
-                ),
+                value: <Typography variant="body1">{fuel.volume}</Typography>,
               }))
               : [
                 {
@@ -126,15 +121,13 @@ const CardModal = ({ card }: CardModaProps) => {
                 },
               ]
           }
-
           direction="row"
           borderBetweenColumns
           borderBetweenRows
         />
-
       </Stack>
     </DataModal>
-  )
-};
+  );
+}
 
-export { CardModal };
+export default CardModal;

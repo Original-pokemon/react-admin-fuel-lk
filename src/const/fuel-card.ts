@@ -5,7 +5,7 @@ export const FuelTypeName = {
   NinetyFifthProf: 'data19',
   HundredthProf: 'data21',
   Gas: 'data18',
-} as const 
+} as const;
 
 export const FuelTypeLabel = {
   NinetyFifth: '95',
@@ -14,4 +14,4 @@ export const FuelTypeLabel = {
   NinetyFifthProf: '95 Проф',
   HundredthProf: '100 Проф',
   Gas: 'Газ',
-} as const
+} as const;

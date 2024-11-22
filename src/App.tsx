@@ -1,33 +1,29 @@
-import {
-  Routes,
-  Route,
-} from "react-router-dom";
-import Home from "./pages/home/home";
-import Transactions from "./pages/transactions/transactions";
-import Cards from "./pages/cards/cards";
-import Login from "./pages/login/login";
-import AzsMap from "./pages/azs-map/azs-map";
-import { AppRoute } from "./const";
-import AuthGuard from "./components/auth-guard/auth-guard";
-import { useEffect } from "react";
-import { useAppDispatch, useAppSelector } from "./hooks/state";
-import { getAuthStatus, fetchFirmData, fetchNomenclatureData, getFirmCardById } from "./store";
-import { Layout } from "./components/layouts/layout";
-import { CssBaseline } from "@mui/material";
-import { ToastContainer } from "react-toastify";
+import { Routes, Route } from 'react-router-dom';
+import { useEffect } from 'react';
+import { CssBaseline } from '@mui/material';
+import { ToastContainer } from 'react-toastify';
+import Home from './pages/home/home';
+import Transactions from './pages/transactions/transactions';
+import Cards from './pages/cards/cards';
+import Login from './pages/login/login';
+import AzsMap from './pages/azs-map/azs-map';
+import AuthGuard from './components/auth-guard/auth-guard';
+import { useAppDispatch, useAppSelector } from './hooks/state';
+import { getAuthStatus, fetchFirmData, fetchNomenclatureData } from './store';
+import Layout from './components/layouts/layout';
 import 'react-toastify/dist/ReactToastify.css';
+import AppRoute from './const/app-route';
 
-const App = () => {
-  const dispatch = useAppDispatch()
-  const { isSuccess: isAuthSuccess } = useAppSelector(getAuthStatus)
-
+function App() {
+  const dispatch = useAppDispatch();
+  const { isSuccess: isAuthSuccess } = useAppSelector(getAuthStatus);
 
   useEffect(() => {
     if (isAuthSuccess) {
-      dispatch(fetchFirmData())
-      dispatch(fetchNomenclatureData())
+      dispatch(fetchFirmData());
+      dispatch(fetchNomenclatureData());
     }
-  }, [dispatch, isAuthSuccess])
+  }, [dispatch, isAuthSuccess]);
 
   return (
     <>
@@ -45,7 +41,7 @@ const App = () => {
             <Route path={AppRoute.AzsMap} element={<AzsMap />} />
             {/* <Route
         path={AppRoute.PageNotFound}
-        element={<NotFoundPage />} 
+        element={<NotFoundPage />}
         /> */}
           </Route>
         </Route>

@@ -6,9 +6,9 @@ type DateCellType = typeof DateCell;
 const meta: Meta<DateCellType> = {
   title: 'Cards/CardsTable/Cells/DateCell',
   component: DateCell,
-  render: (args) => <DateCell  {...args} />,
-}
-export default meta
+  render: (arguments_) => <DateCell {...arguments_} />,
+};
+export default meta;
 
 type Story = StoryObj<DateCellType>;
 
@@ -16,4 +16,4 @@ export const LastOperationDate: Story = {
   args: {
     value: '2024-09-20',
   },
-}
+};

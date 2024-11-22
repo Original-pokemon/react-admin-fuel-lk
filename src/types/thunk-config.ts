@@ -1,11 +1,11 @@
 import { AxiosInstance } from 'axios';
-import { AppDispatchType, StateType } from '.';
+import type { AppDispatchType, StateType } from '.';
 import { Status } from '../const';
 
-export type asyncThunkConfig = {
+export type AsyncThunkConfig = {
   dispatch: AppDispatchType;
   state: StateType;
   extra: AxiosInstance;
 };
 
-export type StatusType = typeof Status[keyof typeof Status];
+export type StatusType = (typeof Status)[keyof typeof Status];

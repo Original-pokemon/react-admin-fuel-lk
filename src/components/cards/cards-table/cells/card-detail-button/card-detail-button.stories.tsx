@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import CardDetailsButton from './card-detail-button';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import CardDetailsButton from './card-detail-button';
 
 type CardDetailsButtonType = typeof CardDetailsButton;
 
@@ -14,15 +14,14 @@ const meta: Meta<CardDetailsButtonType> = {
       </BrowserRouter>
     ),
   ],
-  render: (args) => <CardDetailsButton   {...args} />,
-}
-export default meta
+  render: (arguments_) => <CardDetailsButton {...arguments_} />,
+};
+export default meta;
 
 type Story = StoryObj<CardDetailsButtonType>;
 
 export const Default: Story = {
   args: {
-    cardnum: 123456,
+    cardnum: 123_456,
   },
-
-}
+};

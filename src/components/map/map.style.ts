@@ -1,12 +1,12 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import { theme } from '#root/styles/theme';
+import theme from '#root/styles/theme';
 
-export const topBoxStyle = css({
+const topBoxStyle = css({
   h1: {
     marginBottom: '20px',
 
-    [theme.breakpoints.xxl]: {
+    [theme.breakpoints.values.xl]: {
       fontSize: '24px',
     },
   },
@@ -28,11 +28,11 @@ export const topBoxStyle = css({
           borderRadius: '50%',
           objectFit: 'cover',
 
-          [theme.breakpoints.xxl]: {
+          [theme.breakpoints.values.xl]: {
             display: 'none',
           },
 
-          [theme.breakpoints.lg]: {
+          [theme.breakpoints.values.lg]: {
             display: 'block',
           },
         },
@@ -50,11 +50,11 @@ export const topBoxStyle = css({
           '.email': {
             fontSize: '12px',
 
-            [theme.breakpoints.xxl]: {
+            [theme.breakpoints.values.xl]: {
               display: 'none',
             },
 
-            [theme.breakpoints.lg]: {
+            [theme.breakpoints.values.lg]: {
               display: 'block',
             },
           },
@@ -67,3 +67,5 @@ export const topBoxStyle = css({
     },
   },
 });
+
+export default topBoxStyle;

@@ -1,8 +1,6 @@
 import React from 'react';
-import { Card, CardContent, Typography, Grid } from '@mui/material';
-import { FirmCashType } from '#root/types';
+import type { FirmCashType } from '#root/types';
 import InfoBox from '../info-box/info-box';
-import { fi } from '@faker-js/faker';
 
 const CONFIRMED_BALANCE_LABEL: string = 'Подтвержденный баланс';
 const UNCONFIRMED_BALANCE_LABEL: string = 'Неподтвержденный баланс';
@@ -10,11 +8,13 @@ const REMAINING_BALANCE_LABEL: string = 'Оставшийся баланс';
 const UNCONFIRMED_VOLUME_LABEL: string = 'Неподтвержденный объем';
 const NO_DATA_LABEL: string = 'Нет данных';
 
-const FirmCashDisplay: React.FC<{ firmCash: FirmCashType }> = ({ firmCash }) => {
-  const { conf, unconf, remain, unconfV } = firmCash
+const FirmCashDisplay: React.FC<{ firmCash: FirmCashType }> = ({
+  firmCash,
+}) => {
+  const { conf, unconf, remain, unconfV } = firmCash;
 
   const confirmedBalance = conf ? `${conf} руб.` : NO_DATA_LABEL;
-  const unconfirmedBalance = unconf ? `${unconf} руб.` : NO_DATA_LABEL
+  const unconfirmedBalance = unconf ? `${unconf} руб.` : NO_DATA_LABEL;
   const remainingBalance = remain ? `${remain} руб.` : NO_DATA_LABEL;
   const unconfirmedVolume = unconfV ? `${unconfV} м³` : NO_DATA_LABEL;
 
@@ -25,12 +25,7 @@ const FirmCashDisplay: React.FC<{ firmCash: FirmCashType }> = ({ firmCash }) => 
     { [UNCONFIRMED_VOLUME_LABEL]: unconfirmedVolume },
   ];
 
-  return (
-    <InfoBox
-      title="Баланс организации"
-      data={cashData}
-    />
-  );
+  return <InfoBox title="Баланс организации" data={cashData} />;
 };
 
 export default FirmCashDisplay;

@@ -1,37 +1,42 @@
-import { Box, Typography, TextField } from '@mui/material';
-import { useEffect, useState, useRef } from 'react';
-import useFilterContext from '../../context';
+import { Box, Typography, TextField } from "@mui/material";
+import { useEffect, useState, useRef } from "react";
+import { useFilterContext } from "../../hooks";
 
-type TextFilterComponentProps = {
+type TextFilterComponentProperties = {
   id: string;
   title: string;
-  defaultValue?: string;
+  defaultValue: string;
 };
 
-const onlyDigits = (value: string) => value.replace(/\D/g, '');
+const onlyDigits = (value: string) => value.replaceAll(/\D/g, "");
 
-const FilterTextField = ({
+function FilterTextField({
   id,
   title,
-  defaultValue = '',
-}: TextFilterComponentProps) => {
+  defaultValue = "",
+}: TextFilterComponentProperties) {
   const { selectedFilters, setSelectedFilters } = useFilterContext();
-  const [value, setValue] = useState(selectedFilters[id]?.options[0]?.value || defaultValue);
+  const [value, setValue] = useState(
+    selectedFilters[id]?.options[0]?.value || defaultValue,
+  );
   const debounceTimeout = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
-    if (defaultValue.trim() !== '') {
-      setSelectedFilters((prevFilters) => ({
-        ...prevFilters,
-        [id]: { title, options: [{ label: defaultValue, value: defaultValue }] },
+    if (defaultValue.trim() !== "") {
+      setSelectedFilters((previousFilters) => ({
+        ...previousFilters,
+        [id]: {
+          title,
+          options: [{ label: defaultValue, value: defaultValue }],
+        },
       }));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, []);
 
-  //Синхронизация локального состояния с selectedFilters
+  // Синхронизация локального состояния с selectedFilters
   useEffect(() => {
-    setValue(selectedFilters[id]?.options[0]?.value || '');
+    setValue(selectedFilters[id]?.options[0]?.value || "");
   }, [selectedFilters, id, defaultValue]);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -44,17 +49,17 @@ const FilterTextField = ({
     }
 
     debounceTimeout.current = setTimeout(() => {
-      if (newValue.trim() === '') {
+      if (newValue.trim() === "") {
         // Удаляем фильтр, если значение пустое
-        setSelectedFilters((prevFilters) => {
-          const updatedFilters = { ...prevFilters };
+        setSelectedFilters((previousFilters) => {
+          const updatedFilters = { ...previousFilters };
           delete updatedFilters[id];
           return updatedFilters;
         });
       } else {
         // Добавляем или обновляем фильтр
-        setSelectedFilters((prevFilters) => ({
-          ...prevFilters,
+        setSelectedFilters((previousFilters) => ({
+          ...previousFilters,
           [id]: { title, options: [{ label: newValue, value: newValue }] },
         }));
       }
@@ -87,7 +92,7 @@ const FilterTextField = ({
       />
     </Box>
   );
-};
+}
 
 export type FilterTextFieldType = ReturnType<typeof FilterTextField>;
 

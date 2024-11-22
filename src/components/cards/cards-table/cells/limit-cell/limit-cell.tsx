@@ -1,16 +1,19 @@
-import { PaperProps, Typography, } from '@mui/material';
+import { PaperProps, Typography } from '@mui/material';
 import { ProgressBar } from './progress-bar/progress-bar';
-import { DataCellBoxStyled } from '../data-cell.style';
 
-type Props = {
+type Properties = {
   limit: number;
   remain: number;
-} & PaperProps
+} & PaperProps;
 
-const LimitCell = ({ limit, remain, ...rest }: Props) => {
+function LimitCell({ limit, remain, ...rest }: Properties) {
   const progress = limit > 0 ? remain / limit : 0;
 
-  return limit ? <ProgressBar value={progress} label={`${remain} / ${limit}`} {...rest} /> : <Typography variant="body2">Не установлен</Typography>
-};
+  return limit ? (
+    <ProgressBar value={progress} label={`${remain} / ${limit}`} {...rest} />
+  ) : (
+    <Typography variant="body2">Не установлен</Typography>
+  );
+}
 
-export { LimitCell };
+export default LimitCell;

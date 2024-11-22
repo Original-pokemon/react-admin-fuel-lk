@@ -1,38 +1,40 @@
-import { FormGroup, FormControlLabel, Checkbox, FormControl, FormLabel, TextField, Typography } from '@mui/material';
+import {
+  FormGroup,
+  FormControlLabel,
+  Checkbox,
+  FormControl,
+  Typography,
+} from '@mui/material';
 import { memo } from 'react';
-import { FilterOption, FilterType } from '../../filter';
-import useFilterContext from '../../context';
+import type { FilterType } from '../../filter';
+import { useFilterContext } from '../../hooks';
 
-const MultipleChoice = memo(({
-  id,
-  title,
-  options,
-}: FilterType) => {
+const MultipleChoice = memo(({ id, title, options }: FilterType) => {
   const { selectedFilters, setSelectedFilters } = useFilterContext();
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const selectedValue = event.target.value;
     const isSelected = event.target.checked;
 
-    const selectedOption = options.find(option => option.value === selectedValue);
+    const selectedOption = options.find(
+      (option) => option.value === selectedValue,
+    );
 
     if (selectedOption) {
       let selected = selectedFilters[id]?.options || [];
 
-      if (isSelected) {
-        selected = [...selected, selectedOption];
-      } else {
-        selected = selected.filter(option => option.value !== selectedValue);
-      }
+      selected = isSelected
+        ? [...selected, selectedOption]
+        : selected.filter((option) => option.value !== selectedValue);
 
-      if (selected.length) {
-        setSelectedFilters((prev) => ({
-          ...prev,
+      if (selected.length > 0) {
+        setSelectedFilters((previous) => ({
+          ...previous,
           [id]: { title, options: selected },
         }));
       } else {
-        setSelectedFilters((prev) => {
-          const updatedFilters = { ...prev };
+        setSelectedFilters((previous) => {
+          const updatedFilters = { ...previous };
           delete updatedFilters[id];
           return updatedFilters;
         });
@@ -41,13 +43,13 @@ const MultipleChoice = memo(({
   };
 
   const selectedOptions = selectedFilters[id]?.options || [];
-  const selectedValuesSet = new Set(selectedOptions.map(option => option.value));
+  const selectedValuesSet = new Set(
+    selectedOptions.map((option) => option.value),
+  );
 
   return (
     <FormControl id={id} sx={{ p: 2 }}>
-      <Typography variant='subtitle1'>
-        {title}
-      </Typography>
+      <Typography variant="subtitle1">{title}</Typography>
       <FormGroup>
         {options.map(({ label, value }) => (
           <FormControlLabel

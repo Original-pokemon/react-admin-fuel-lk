@@ -2,12 +2,12 @@ import React from 'react';
 import { IconButton, Badge } from '@mui/material';
 import RefreshIcon from '@mui/icons-material/Refresh';
 
-type FilterHeaderActionsProps = {
+type FilterHeaderActionsProperties = {
   hasTempSelectedFilters: boolean;
   onClearTempFilters: () => void;
 };
 
-const FilterHeaderActions: React.FC<FilterHeaderActionsProps> = ({
+const FilterHeaderActions: React.FC<FilterHeaderActionsProperties> = ({
   hasTempSelectedFilters,
   onClearTempFilters,
 }) => {
@@ -17,7 +17,11 @@ const FilterHeaderActions: React.FC<FilterHeaderActionsProps> = ({
       disabled={!hasTempSelectedFilters}
       aria-label="Сбросить фильтры"
     >
-      <Badge color="secondary" variant="dot" invisible={!hasTempSelectedFilters}>
+      <Badge
+        color="secondary"
+        variant="dot"
+        invisible={!hasTempSelectedFilters}
+      >
         <RefreshIcon />
       </Badge>
     </IconButton>

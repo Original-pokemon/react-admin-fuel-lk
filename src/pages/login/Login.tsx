@@ -1,85 +1,89 @@
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
-import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import Box from "@mui/material/Box";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
-import { useAppDispatch, useAppSelector } from "#root/hooks/state";
-import { postAuthData } from "#root/store/slice/auth-data/thunk";
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { AppRoute } from "#root/const";
-import { getAuthStatus } from "#root/store";
-import { Spinner } from "#root/components/spinner/spinner";
-import { IconButton, InputAdornment } from "@mui/material";
-import { Visibility, VisibilityOff } from "@mui/icons-material";
-import { Controller, useForm } from "react-hook-form";
-import * as yup from "yup";
-import { yupResolver } from "@hookform/resolvers/yup";
+import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
+import CssBaseline from '@mui/material/CssBaseline';
+import TextField from '@mui/material/TextField';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
+import Box from '@mui/material/Box';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import Typography from '@mui/material/Typography';
+import Container from '@mui/material/Container';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { IconButton, InputAdornment } from '@mui/material';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
+import { Controller, useForm } from 'react-hook-form';
+import * as yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
+import Spinner from '#root/components/spinner/spinner';
+import { getAuthStatus } from '#root/store';
+import { postAuthData } from '#root/store/slice/auth-data/thunk';
+import { useAppDispatch, useAppSelector } from '#root/hooks/state';
+import AppRoute from '#root/const/app-route';
 
 type LoginFormData = {
   username: string;
   password: string;
   rememberMe: boolean;
-}
+};
 
 const schema = yup.object({
   username: yup
     .string()
-    .required("Имя пользователя обязательно.")
-    .matches(/^[a-zA-Z0-9._-]{3,20}$/, "Пожалуйста, введите валидное имя пользователя.")
+    .required('Имя пользователя обязательно.')
+    .matches(/^[\w.-]{3,20}$/, 'Пожалуйста, введите валидное имя пользователя.')
     .trim(),
   password: yup
     .string()
-    .required("Пароль обязателен.")
+    .required('Пароль обязателен.')
     .min(3, 'Пароль должен содержать не менее 3 символов.')
     .matches(/^\S*$/, 'Пароль не должен содержать пробелы.'),
   rememberMe: yup.boolean().default(false),
 });
 
-const Login = () => {
-  const dispatch = useAppDispatch()
-  const { isSuccess, isLoading } = useAppSelector(getAuthStatus)
-  const navigate = useNavigate()
+const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+  const char = event.key;
+  const regex = /^[\w-]+$/;
+  if (!regex.test(char)) {
+    event.preventDefault();
+  }
+};
+
+function Login() {
+  const dispatch = useAppDispatch();
+  const { isSuccess, isLoading } = useAppSelector(getAuthStatus);
+  const navigate = useNavigate();
 
   const [showPassword, setShowPassword] = useState(false);
 
-  const { control, handleSubmit, formState: { errors, isValid } } = useForm<LoginFormData>({
+  const {
+    control,
+    handleSubmit,
+    formState: { errors, isValid },
+  } = useForm<LoginFormData>({
     resolver: yupResolver(schema),
     delayError: 500,
-    mode: "onChange",
+    mode: 'onChange',
     defaultValues: {
-      username: "",
-      password: "",
+      username: '',
+      password: '',
       rememberMe: false,
     },
   });
-
-  const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    const char = (event.key);
-    const regex = /^[a-zA-Z0-9_-]+$/;
-    if (!regex.test(char)) {
-      event.preventDefault();
-    }
-  };
 
   const onSubmit = async (data: LoginFormData) => {
     dispatch(postAuthData(data));
   };
 
   const togglePasswordVisibility = () => {
-    setShowPassword((prev) => !prev);
+    setShowPassword((previous) => !previous);
   };
 
   useEffect(() => {
     if (isSuccess) {
       navigate(AppRoute.Main);
     }
-  }, [isSuccess])
+  }, [isSuccess, navigate]);
 
   return (
     <Container component="main" maxWidth="xs">
@@ -88,12 +92,12 @@ const Login = () => {
       <Box
         sx={{
           marginTop: 8,
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
         }}
       >
-        <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+        <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
@@ -116,7 +120,7 @@ const Login = () => {
                 sx={(theme) => ({
                   '& .MuiInputLabel-root': {
                     color: theme.palette.text.primary,
-                  }
+                  },
                 })}
                 helperText={errors.username?.message}
                 margin="normal"
@@ -140,7 +144,7 @@ const Login = () => {
                 sx={(theme) => ({
                   '& .MuiInputLabel-root': {
                     color: theme.palette.text.primary,
-                  }
+                  },
                 })}
                 helperText={errors.password?.message}
                 margin="normal"
@@ -148,7 +152,7 @@ const Login = () => {
                 fullWidth
                 label="Пароль"
                 autoComplete="current-password"
-                type={showPassword ? "text" : "password"}
+                type={showPassword ? 'text' : 'password'}
                 onKeyDown={handleKeyPress}
                 InputProps={{
                   endAdornment: (
@@ -159,7 +163,6 @@ const Login = () => {
                     </InputAdornment>
                   ),
                 }}
-
               />
             )}
           />
@@ -192,7 +195,7 @@ const Login = () => {
             sx={{ mt: 3, mb: 2 }}
             disabled={isLoading || !isValid}
           >
-            {isLoading ? "Вход..." : "Войти"}
+            {isLoading ? 'Вход...' : 'Войти'}
           </Button>
         </Box>
       </Box>

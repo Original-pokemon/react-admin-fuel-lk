@@ -1,8 +1,8 @@
-import { Meta, StoryObj } from "@storybook/react";
-import FilterTextField from "./filter-text-field";
-import { FilterContext } from "../../context";
-import { SelectedFiltersType } from "../../filter";
-import { useMemo, useState } from "react";
+import { Meta, StoryObj } from '@storybook/react';
+import { useMemo, useState } from 'react';
+import FilterTextField from './filter-text-field';
+import { FilterContext } from '../../context';
+import { SelectedFiltersType } from '../../filter';
 
 type FilterTextFieldType = typeof FilterTextField;
 
@@ -11,12 +11,13 @@ const meta: Meta<FilterTextFieldType> = {
   component: FilterTextField,
   decorators: [
     (Story) => {
-      const [selectedFilters, setSelectedFilters] = useState<SelectedFiltersType>({});
+      const [selectedFilters, setSelectedFilters] =
+        useState<SelectedFiltersType>({});
 
       const value = useMemo(
         () => ({ selectedFilters, setSelectedFilters }),
-        [selectedFilters, setSelectedFilters]
-      )
+        [selectedFilters, setSelectedFilters],
+      );
 
       return (
         <FilterContext.Provider value={value}>
@@ -25,7 +26,7 @@ const meta: Meta<FilterTextFieldType> = {
       );
     },
   ],
-}
+};
 
 export default meta;
 
@@ -33,8 +34,8 @@ type Story = StoryObj<FilterTextFieldType>;
 
 export const Default: Story = {
   args: {
-    id: "cardNumber",
-    title: "Номер карты",
-    defaultValue: "",
+    id: 'cardNumber',
+    title: 'Номер карты',
+    defaultValue: '',
   },
 };

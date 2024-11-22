@@ -29,7 +29,12 @@
   },
   "include": [
     "src",
-    "vite.config.ts",
+  ],
+  "exclude": [
+    "**/*.stories.tsx",
+    "node_modules",
+    "dist",
+    "vite.config.ts"
   ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

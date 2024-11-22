@@ -1,5 +1,3 @@
-import { css } from '@emotion/react';
-import { theme } from '../../../styles/theme';
 import { Box, BoxProps, styled } from '@mui/material';
 
 export const InfoStyledBox = styled(Box)<BoxProps>(({ theme }) => ({
@@ -37,4 +35,4 @@ export const InfoStyledBox = styled(Box)<BoxProps>(({ theme }) => ({
       },
     },
   },
-}))
+}));

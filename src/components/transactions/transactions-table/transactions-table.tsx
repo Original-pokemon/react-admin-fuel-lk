@@ -1,21 +1,29 @@
-import { DataTable } from "../../layouts/data-layouts/data-table/data-table";
-import { transactionColumns } from "./transaction-сolumns";
-import { mapTransactionsToRows } from "./map-transactions-to-row";
-import { TransactionType } from "#root/types";
-import { Box } from "@mui/material";
+import { Box } from '@mui/material';
+import { TransactionType } from '#root/types';
+import { DataTable } from '../../layouts/data-layouts/data-table/data-table';
+import transactionColumns from './transaction-сolumns';
+import { mapTransactionsToRows } from './map-transactions-to-row';
 
-type TransactionsTableProps = {
+type TransactionsTableProperties = {
   name: string;
   transactions: TransactionType[];
-  isLoading?: boolean;
+  isLoading: boolean;
 };
 
-
-const TransactionsTable = ({ transactions, name, isLoading = false }: TransactionsTableProps) => {
+function TransactionsTable({
+  transactions,
+  name,
+  isLoading = false,
+}: TransactionsTableProperties) {
   const row = mapTransactionsToRows(transactions);
 
   return (
-    <Box className="transactions-table" bgcolor={'background.paper'} padding={2} borderRadius={'10px'}>
+    <Box
+      className="transactions-table"
+      bgcolor="background.paper"
+      padding={2}
+      borderRadius="10px"
+    >
       <DataTable
         name={name}
         columns={transactionColumns}
@@ -23,7 +31,7 @@ const TransactionsTable = ({ transactions, name, isLoading = false }: Transactio
         loading={isLoading}
       />
     </Box>
-  )
-};
+  );
+}
 
 export default TransactionsTable;

@@ -1,14 +1,12 @@
-import Logo from "../logo/logo"
-import { FooterStyledBox } from "./footer.style"
+import Logo from '../logo/logo';
+import { FooterStyledBox } from './footer.style';
 
-
-
-const Footer = ({ className }: { className?: string }) => {
+function Footer({ className }: { className?: string }) {
   return (
-    <FooterStyledBox className={className} >
+    <FooterStyledBox className={className}>
       <Logo />
     </FooterStyledBox>
-  )
+  );
 }
 
-export default Footer
+export default Footer;

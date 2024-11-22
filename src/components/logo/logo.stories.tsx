@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import Logo from "./logo";
 import { MemoryRouter } from 'react-router-dom';
+import Logo from './logo';
 
 const meta: Meta<typeof Logo> = {
   title: 'Components/Logo',
@@ -14,10 +14,10 @@ const meta: Meta<typeof Logo> = {
   ],
 };
 
-export default meta
+export default meta;
 
 type Story = StoryObj<typeof Logo>;
 
 export const DefaultSpinner: Story = {
-  name: "default logo",
+  name: 'default logo',
 };

@@ -1,11 +1,11 @@
 import { Meta, StoryObj } from '@storybook/react';
 import { BrowserRouter } from 'react-router-dom';
-import TransactionsTable from './transactions-table';
+import configureMockStore from 'redux-mock-store';
+import { Provider } from 'react-redux';
 import { generateMockCardTransactionList } from '#root/mock/card-transaction';
 import { NameSpace } from '#root/const';
 import { generateMockNomenclature } from '#root/mock/nomenclature';
-import configureMockStore from 'redux-mock-store';
-import { Provider } from 'react-redux';
+import TransactionsTable from './transactions-table';
 
 type TransactionsTableType = typeof TransactionsTable;
 
@@ -15,7 +15,7 @@ const mockStore = configureMockStore();
 
 const initialState = {
   [NameSpace.App]: {
-    nomenclature: generateMockNomenclature()
+    nomenclature: generateMockNomenclature(),
   },
 };
 
@@ -42,7 +42,7 @@ type Story = StoryObj<TransactionsTableType>;
 export const Default: Story = {
   args: {
     name: 'Sample Transactions',
-    transactions: transactions,
+    transactions,
   },
 };
 
@@ -53,4 +53,3 @@ export const Loading: Story = {
     isLoading: true,
   },
 };
-

@@ -17,4 +17,4 @@ export const FooterStyledBox = styled(Box)<BoxProps>(({ theme }) => ({
       fontSize: '14px',
     },
   },
-}))
+}));

@@ -6,9 +6,9 @@ type LimitCellType = typeof LimitCell;
 const meta: Meta<LimitCellType> = {
   title: 'Cards/CardsTable/Cells/LimitCell',
   component: LimitCell,
-  render: (args) => <LimitCell {...args} />,
-}
-export default meta
+  render: (arguments_) => <LimitCell {...arguments_} />,
+};
+export default meta;
 
 type Story = StoryObj<LimitCellType>;
 
@@ -17,10 +17,10 @@ export const DayLimit: Story = {
     limit: 1000,
     remain: 500,
   },
-}
+};
 export const MonthLimit: Story = {
   args: {
-    limit: 10000,
+    limit: 10_000,
     remain: 3000,
   },
-}
+};

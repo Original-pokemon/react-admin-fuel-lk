@@ -1,15 +1,27 @@
-import { useEffect, useRef } from 'react'
+import { useContext, useEffect, useRef } from 'react';
+import FilterContext from './context';
 
-const useEffectSkipMount = (cb: () => void, deps: any[]) => {
-  const mounted = useRef(true)
+const useEffectSkipMount = (callback: () => void, deps: any[]) => {
+  const mounted = useRef(true);
 
   useEffect(() => {
     if (!mounted.current) {
-      return cb()
+      return callback();
     }
 
-    mounted.current = false
-  }, [...deps])
-}
+    mounted.current = false;
+  }, [callback, ...deps]);
+};
 
-export default useEffectSkipMount
+export const useFilterContext = () => {
+  const context = useContext(FilterContext);
+
+  if (!context) {
+    throw new Error(
+      'Filter compound components should be used only with FilterContext',
+    );
+  }
+  return context;
+};
+
+export default useEffectSkipMount;

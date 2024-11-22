@@ -1,17 +1,14 @@
 import Map from "../../components/map/map";
-import { ODINTSOVO_COORD } from "../../const/map";
-import { prepareMarkers, filterFeaturesByOption } from "../../utils/markers";
+import ODINTSOVO_COORD from "../../const/map";
+import { prepareMarkers } from "../../utils/markers";
 import mapInfo from "../../mock/map-info";
-import { Circle, LayerGroup, LayersControl, MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
-import { FeatureGroup, LatLngBoundsExpression, LatLngExpression, Rectangle } from "leaflet";
 
-
-const center: LatLngExpression = [51.505, -0.09]
-const rectangle = [
-  [51.49, -0.08],
-  [51.5, -0.06],
-]
-const AzsMap = () => {
+// const center: LatLngExpression = [51.505, -0.09];
+// const rectangle = [
+//   [51.49, -0.08],
+//   [51.5, -0.06],
+// ];
+function AzsMap() {
   const mapConfig = {
     center: ODINTSOVO_COORD,
     keyboard: true,
@@ -24,21 +21,19 @@ const AzsMap = () => {
     style: { height: "100%" },
   };
 
-  const ai92FilteredMarkers = filterFeaturesByOption(mapInfo, "ai92")
-  const ai95FilteredMarkers = filterFeaturesByOption(mapInfo, "ai95")
-  const ai95pFilteredMarkers = filterFeaturesByOption(mapInfo, "ai95p")
-  const ai100pFilteredMarkers = filterFeaturesByOption(mapInfo, "ai100p")
-  const dtFilteredMarkers = filterFeaturesByOption(mapInfo, "dt")
-  const sugFilteredMarkers = filterFeaturesByOption(mapInfo, "sug")
-  const shopFilteredMarkers = filterFeaturesByOption(mapInfo, "shop")
-
+  // const ai92FilteredMarkers = filterFeaturesByOption(mapInfo, "ai92");
+  // const ai95FilteredMarkers = filterFeaturesByOption(mapInfo, "ai95");
+  // const ai95pFilteredMarkers = filterFeaturesByOption(mapInfo, "ai95p");
+  // const ai100pFilteredMarkers = filterFeaturesByOption(mapInfo, "ai100p");
+  // const dtFilteredMarkers = filterFeaturesByOption(mapInfo, "dt");
+  // const sugFilteredMarkers = filterFeaturesByOption(mapInfo, "sug");
+  // const shopFilteredMarkers = filterFeaturesByOption(mapInfo, "shop");
 
   const markers = prepareMarkers(mapInfo, true);
   return (
-    <>
-      <div className="azs-map" style={{ height: "100%" }}>
-        <Map mapConfig={mapConfig} markers={markers}></Map>
-        {/* <MapContainer center={center} zoom={13} scrollWheelZoom={false} style={{ height: "100%" }}>
+    <div className="azs-map" style={{ height: "100%" }}>
+      <Map mapConfig={mapConfig} markers={markers} />
+      {/* <MapContainer center={center} zoom={13} scrollWheelZoom={false} style={{ height: "100%" }}>
           <TileLayer
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
@@ -71,9 +66,8 @@ const AzsMap = () => {
             </LayersControl.Overlay>
           </LayersControl>
         </MapContainer> */}
-      </div>
-    </>)
-
-};
+    </div>
+  );
+}
 
 export default AzsMap;

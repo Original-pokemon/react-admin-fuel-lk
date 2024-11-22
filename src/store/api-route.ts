@@ -3,5 +3,5 @@ export const APIRoute = {
   FirmInfo: (id: number) => `/cc/e?${id}`,
   AuthInfo: '/who/ami',
   NomenclatureData: '/cc/e-fuelids',
-  Transaction: "/cc/t"
-} as const
+  Transaction: '/cc/t',
+} as const;

@@ -1,5 +1,5 @@
-import { faker } from "@faker-js/faker";
-import { TransactionType } from "../types/card-transaction";
+import { faker } from '@faker-js/faker';
+import { TransactionType } from '../types/card-transaction';
 
 export const generateMockCardTransaction = (): TransactionType => {
   const transactionType = faker.helpers.arrayElement([-1, 1]);
@@ -23,4 +23,3 @@ export const generateMockCardTransaction = (): TransactionType => {
 
 export const generateMockCardTransactionList = (length: number) =>
   Array.from({ length }, () => generateMockCardTransaction());
-

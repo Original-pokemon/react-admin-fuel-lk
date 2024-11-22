@@ -1,7 +1,7 @@
 import { css } from '@emotion/react';
-import { theme } from '#root/styles/theme';
+import theme from '#root/styles/theme';
 
-export const singleStyle = css({
+const singleStyle = css({
   display: 'flex',
 
   [theme.breakpoints.values.xl]: {
@@ -59,3 +59,5 @@ export const singleStyle = css({
     },
   },
 });
+
+export default singleStyle;

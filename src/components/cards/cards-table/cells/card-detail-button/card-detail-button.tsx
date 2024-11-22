@@ -1,39 +1,49 @@
-import { IconButton, Menu, MenuItem, Typography } from '@mui/material';
-import { MoreVert as MoreVertIcon, Visibility as VisibilityIcon, Receipt as ReceiptIcon, } from '@mui/icons-material';
-import { createSearchParams, generatePath, redirect, useLocation, useNavigate, useSearchParams } from 'react-router-dom';
-import { AppRoute } from '#root/const';
-import { useState, MouseEvent } from 'react';
+import { IconButton, Menu, MenuItem, Typography } from "@mui/material";
+import {
+  MoreVert as MoreVertIcon,
+  Visibility as VisibilityIcon,
+  Receipt as ReceiptIcon,
+} from "@mui/icons-material";
+import {
+  createSearchParams,
+  useNavigate,
+  useSearchParams,
+} from "react-router-dom";
+import { useState, MouseEvent } from "react";
+import AppRoute from "#root/const/app-route";
 
-type CardDetailsButtonProps = {
+type CardDetailsButtonProperties = {
   cardnum: number;
   iconSize?: number | string;
 };
 
-
-const CardDetailsButton = ({ cardnum, iconSize = 24 }: CardDetailsButtonProps) => {
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const open = Boolean(anchorEl);
-  const [_, setSearchParams] = useSearchParams()
+function CardDetailsButton({
+  cardnum,
+  iconSize = 24,
+}: CardDetailsButtonProperties) {
+  const [anchorElement, setAnchorElement] = useState<HTMLElement | null>();
+  const open = Boolean(anchorElement);
+  const [, setSearchParameters] = useSearchParams();
   const navigate = useNavigate();
 
   const handleClick = (event: MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
+    setAnchorElement(event.currentTarget);
   };
 
   const handleClose = () => {
-    setAnchorEl(null);
+    setAnchorElement(null);
   };
 
   const handleViewDetails = () => {
-    setSearchParams({ modalcardnum: cardnum.toString() })
+    setSearchParameters({ modalcardnum: cardnum.toString() });
     handleClose();
   };
 
   const handleViewTransactions = () => {
-    const searchParams = createSearchParams({
-      filterbycard: cardnum.toString()
-    })
-    navigate(AppRoute.Transaction + `?${searchParams.toString()}`);
+    const searchParameters = createSearchParams({
+      filterbycard: cardnum.toString(),
+    });
+    navigate(`${AppRoute.Transaction}?${searchParameters.toString()}`);
     // setSearchParams({ filterbycard: cardnum.toString() })
     handleClose();
   };
@@ -43,11 +53,7 @@ const CardDetailsButton = ({ cardnum, iconSize = 24 }: CardDetailsButtonProps) =
       <IconButton onClick={handleClick}>
         <MoreVertIcon sx={{ fontSize: iconSize }} />
       </IconButton>
-      <Menu
-        anchorEl={anchorEl}
-        open={open}
-        onClose={handleClose}
-      >
+      <Menu anchorEl={anchorElement} open={open} onClose={handleClose}>
         <MenuItem onClick={handleViewDetails}>
           <VisibilityIcon sx={{ mr: 1 }} />
           <Typography variant="body2">Посмотреть детали</Typography>
@@ -59,6 +65,10 @@ const CardDetailsButton = ({ cardnum, iconSize = 24 }: CardDetailsButtonProps) =
       </Menu>
     </>
   );
+}
+
+CardDetailsButton.defaultProps = {
+  iconSize: undefined,
 };
 
 export default CardDetailsButton;

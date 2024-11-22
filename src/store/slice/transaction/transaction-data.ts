@@ -1,12 +1,12 @@
-import { createEntityAdapter, createSlice } from "@reduxjs/toolkit";
-import { StatusType, TransactionType } from "#root/types";
-import { NameSpace, Status } from "#root/const";
-import { fetchTransactions } from './thunk'
-
+/* eslint-disable no-param-reassign */
+import { createEntityAdapter, createSlice } from '@reduxjs/toolkit';
+import type { StatusType, TransactionType } from '#root/types';
+import { NameSpace, Status } from '#root/const';
+import { fetchTransactions } from './thunk';
 
 type InitialStateType = {
-  status: StatusType,
-}
+  status: StatusType;
+};
 
 const transactionsAdapter = createEntityAdapter<TransactionType, string>({
   selectId: (transaction) => `${transaction.dt}-${transaction.cardnum}`,
@@ -15,7 +15,7 @@ const transactionsAdapter = createEntityAdapter<TransactionType, string>({
 
 const initialState: InitialStateType = {
   status: Status.Idle,
-}
+};
 
 const transactionDataSlice = createSlice({
   name: NameSpace.Transaction,
@@ -32,8 +32,8 @@ const transactionDataSlice = createSlice({
       })
       .addCase(fetchTransactions.rejected, (state) => {
         state.status = Status.Error;
-      })
-  }
-})
+      });
+  },
+});
 
-export { transactionsAdapter, transactionDataSlice }
+export { transactionsAdapter, transactionDataSlice };

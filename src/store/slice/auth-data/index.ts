@@ -1,3 +1,3 @@
 export * from './selectors';
 export * from './thunk';
-export * from './auth-data'
+export * from './auth-data';

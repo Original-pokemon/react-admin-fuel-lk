@@ -1,4 +1,4 @@
-import { Feature, FeatureCollection, Option } from "../types/map-point";
+import { Feature, FeatureCollection, Option } from '../types/map-point';
 
 const prepareMarkers = (map: FeatureCollection, popupContent = false) => {
   return map.features.map((feature) => {
@@ -23,12 +23,15 @@ const prepareMarkers = (map: FeatureCollection, popupContent = false) => {
   });
 };
 
-const filterFeaturesByOption = (collection: FeatureCollection, optionKey: string): Record<string, Feature[]> => {
+const filterFeaturesByOption = (
+  collection: FeatureCollection,
+  optionKey: string,
+): Record<string, Feature[]> => {
   const filteredOptions: Record<string, Feature[]> = {};
 
   collection.features.forEach((feature) => {
     const value = feature.options[optionKey as Option];
-    if (!!value) {
+    if (value) {
       if (!(optionKey in filteredOptions)) {
         filteredOptions[optionKey] = [];
       }
@@ -37,9 +40,6 @@ const filterFeaturesByOption = (collection: FeatureCollection, optionKey: string
   });
 
   return filteredOptions;
-}
-
-export {
-  prepareMarkers,
-  filterFeaturesByOption
 };
+
+export { prepareMarkers, filterFeaturesByOption };

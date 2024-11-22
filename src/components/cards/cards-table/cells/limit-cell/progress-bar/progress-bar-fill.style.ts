@@ -1,4 +1,4 @@
-import { Box, BoxProps, styled } from "@mui/material";
+import { Box, BoxProps, styled } from '@mui/material';
 
 export const ProgressBarFill = styled(Box)<BoxProps>(({ theme }) => ({
   height: '100%',
@@ -9,6 +9,6 @@ export const ProgressBarFill = styled(Box)<BoxProps>(({ theme }) => ({
     backgroundColor: theme.palette.secondary.light,
   },
   '&.high': {
-    backgroundColor: "#088208a3",
+    backgroundColor: '#088208a3',
   },
 }));

@@ -4,4 +4,4 @@ export type AuthInfoType = {
   isCard: boolean;
   firmId: number;
   cardNum: number;
-}
+};

@@ -1,14 +1,19 @@
-import { Box, IconButton, Typography } from "@mui/material";
+import { Box, IconButton, Typography } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 
-type DrawerHeaderProps = {
+type DrawerHeaderProperties = {
   title?: React.ReactNode;
   hideCloseButton?: boolean;
   onClose: () => void;
   headerActions?: React.ReactNode;
 };
 
-const DrawerHeader: React.FC<DrawerHeaderProps> = ({ title, hideCloseButton, onClose, headerActions }) => (
+const DrawerHeader: React.FC<DrawerHeaderProperties> = ({
+  title,
+  hideCloseButton,
+  onClose,
+  headerActions,
+}) => (
   <Box
     sx={{
       position: 'sticky',
@@ -41,4 +46,4 @@ const DrawerHeader: React.FC<DrawerHeaderProps> = ({ title, hideCloseButton, onC
 
 export type DrawerHeaderType = ReturnType<typeof DrawerHeader>;
 
-export default DrawerHeader
+export default DrawerHeader;

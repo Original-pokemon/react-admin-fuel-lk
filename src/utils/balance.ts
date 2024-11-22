@@ -1,4 +1,4 @@
-import { ContractType } from "../types/contract";
+import { ContractType } from '../types/contract';
 
 const calculateBalance = (contracts: ContractType[]) => {
   const balance = contracts.reduce(

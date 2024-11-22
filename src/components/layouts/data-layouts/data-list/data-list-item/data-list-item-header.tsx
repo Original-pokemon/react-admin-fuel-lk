@@ -1,31 +1,34 @@
 import { ReactElement } from 'react';
-import {
-  CardHeader,
-  Typography,
-  Avatar,
-} from '@mui/material';
+import { CardHeader } from '@mui/material';
 
-export type DataListItemHeaderProps = {
+export type DataListItemHeaderPropertiesType = {
   title?: ReactElement;
   subTitle?: ReactElement;
   avatar?: ReactElement;
   action?: ReactElement;
 };
 
-const DataListItemHeader = ({
+function DataListItemHeader({
   title,
   subTitle,
   avatar,
-  action
-}: DataListItemHeaderProps) => {
+  action,
+}: DataListItemHeaderPropertiesType) {
   return (
     <CardHeader
       avatar={avatar}
-      action={action}
-      title={title && title}
-      subheader={subTitle && subTitle}
+      action={action && action}
+      title={title}
+      subheader={subTitle}
     />
   );
+}
+
+DataListItemHeader.defaultProps = {
+  title: undefined,
+  subTitle: undefined,
+  avatar: undefined,
+  action: undefined,
 };
 
 export { DataListItemHeader };

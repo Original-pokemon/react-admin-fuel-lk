@@ -1,8 +1,6 @@
-import { css } from '@emotion/react';
-import { theme } from '../../styles/theme';
 import { Box, BoxProps, styled } from '@mui/material';
 
-export const HomeStyledBox = styled(Box)<BoxProps>(({ theme }) => ({
+const HomeStyledBox = styled(Box)<BoxProps>(({ theme }) => ({
   display: 'grid',
   gap: '1.125rem',
   gridTemplateColumns: 'repeat(4, 1fr)',
@@ -28,7 +26,7 @@ export const HomeStyledBox = styled(Box)<BoxProps>(({ theme }) => ({
 
     [theme.breakpoints.values.md]: {
       maxWidth: '26rem',
-    }
+    },
   },
 
   '.box1': {
@@ -57,4 +55,6 @@ export const HomeStyledBox = styled(Box)<BoxProps>(({ theme }) => ({
       display: 'none',
     },
   },
-}))
+}));
+
+export default HomeStyledBox;

@@ -1,7 +1,6 @@
-import { Height } from "@mui/icons-material";
-import { Box, BoxProps, styled } from "@mui/material";
+import { Box, BoxProps, styled } from '@mui/material';
 
-export const LayoutStyleBox = styled(Box)<BoxProps>(({ theme }) => ({
+const LayoutStyleBox = styled(Box)<BoxProps>(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'space-between',
@@ -40,7 +39,6 @@ export const LayoutStyleBox = styled(Box)<BoxProps>(({ theme }) => ({
   '.contentContainer': {
     width: '100%',
 
-
     backgroundColor: theme.palette.background.default,
 
     [theme.breakpoints.values.md]: {
@@ -48,7 +46,7 @@ export const LayoutStyleBox = styled(Box)<BoxProps>(({ theme }) => ({
     },
   },
 
-  '.footer': {
+  '.footer': {},
+}));
 
-  }
-}))
+export default LayoutStyleBox;

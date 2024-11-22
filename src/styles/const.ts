@@ -1,21 +1,19 @@
-
-
 const pantone382C = '#C4D600';
 const pantone151C = '#FF8533';
 const pantone012C = '#FFD700';
 const pantone288C = '#002D72';
 const pantone433C = '#1F1A17';
 
-export const brandColors = {
-  ai92: "#ffff00",
-  ai95: "#ffa500",
+const brandColors = {
+  ai92: '#ffff00',
+  ai95: '#ffa500',
   ai95p: pantone382C,
   dt: pantone433C,
   sug: pantone288C,
-  ai100p: "#ff0000",
+  ai100p: '#ff0000',
 
   green: {
-    main: pantone382C
+    main: pantone382C,
   },
   orange: {
     main: pantone151C,
@@ -45,3 +43,5 @@ export const brandColors = {
     contrastText: '#000000',
   },
 };
+
+export default brandColors;

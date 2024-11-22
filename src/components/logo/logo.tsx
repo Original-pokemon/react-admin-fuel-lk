@@ -1,8 +1,8 @@
 import { NavLink } from 'react-router-dom';
+import AppRoute from '#root/const/app-route';
 import { logoStyle } from './logo.style';
-import { AppRoute } from '#root/const';
 
-const Logo = () => {
+function Logo() {
   return (
     <NavLink className="logo" css={logoStyle} to={AppRoute.Main}>
       <img src="logo.svg" alt="logo" />
@@ -10,4 +10,4 @@ const Logo = () => {
   );
 }
 
-export default Logo
+export default Logo;

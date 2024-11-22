@@ -1,14 +1,15 @@
-import CardAvatar from "#root/components/card-avatar/card-avatar";
-import { DataListItemHeaderProps } from "#root/components/layouts/data-layouts/data-list/data-list-item/data-list-item-header";
-import { TransactionType } from "#root/types";
-import { Stack, Typography } from "@mui/material";
-import dayjs from "dayjs";
+import { Stack, Typography } from '@mui/material';
+import dayjs from 'dayjs';
+import CardAvatar from '#root/components/card-avatar/card-avatar';
+import { DataListItemHeaderPropertiesType } from '#root/components/layouts/data-layouts/data-list/data-list-item/data-list-item-header';
+import { TransactionType } from '#root/types';
 
-const getTransactionHeaderProps = (transaction: TransactionType): DataListItemHeaderProps => {
+const getTransactionHeaderProperties = (
+  transaction: TransactionType,
+): DataListItemHeaderPropertiesType => {
   const { dt, azs, cardnum } = transaction;
 
   const formattedDate = dayjs(dt).format('DD.MM.YYYY HH:mm:ss');
-
 
   return {
     avatar: <CardAvatar cardnum={cardnum} />,
@@ -23,4 +24,4 @@ const getTransactionHeaderProps = (transaction: TransactionType): DataListItemHe
   };
 };
 
-export default getTransactionHeaderProps
+export default getTransactionHeaderProperties;

@@ -1,11 +1,10 @@
-import { Paper, PaperProps, styled } from "@mui/material";
+import { Paper, PaperProps, styled } from '@mui/material';
 
 export const ProgressBarContainer = styled(Paper)<PaperProps>(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   position: 'relative',
   overflow: 'hidden',
-
 
   minWidth: '100px',
   maxWidth: '120px',

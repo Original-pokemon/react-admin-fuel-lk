@@ -1,8 +1,8 @@
-import { GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
+import { GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
 import { green, red } from '@mui/material/colors';
-import FuelChip from "../../fuel-chilp/fuel-chip";
+import FuelChip from '../../fuel-chilp/fuel-chip';
 
-export const transactionColumns: GridColDef[] = [
+const transactionColumns: GridColDef[] = [
   {
     field: 'dt',
     headerName: 'Дата и время',
@@ -13,9 +13,9 @@ export const transactionColumns: GridColDef[] = [
     field: 'summa',
     headerName: 'Сумма',
     width: 100,
-    renderCell: (params: GridRenderCellParams) => (
-      <span style={{ color: params.row.op === -1 ? red[500] : green[500] }}>
-        {params.value}
+    renderCell: (parameters: GridRenderCellParams) => (
+      <span style={{ color: parameters.row.op === -1 ? red[500] : green[500] }}>
+        {parameters.value}
       </span>
     ),
   },
@@ -24,8 +24,8 @@ export const transactionColumns: GridColDef[] = [
     field: 'fuelid',
     headerName: 'Топливо',
     width: 150,
-    renderCell: (params: GridRenderCellParams) => (
-      <FuelChip fuelId={params.value} />
+    renderCell: (parameters: GridRenderCellParams) => (
+      <FuelChip fuelId={parameters.value} />
     ),
   },
   { field: 'price', headerName: 'Цена', width: 100 },
@@ -33,14 +33,13 @@ export const transactionColumns: GridColDef[] = [
     field: 'op',
     headerName: 'Тип операции',
     width: 150,
-    renderCell: (params: GridRenderCellParams) => (
-      <span style={{ color: params.row.op === -1 ? red[500] : green[500] }}>
-        {params.value === -1 ? 'Списание' : 'Пополнение'}
+    renderCell: (parameters: GridRenderCellParams) => (
+      <span style={{ color: parameters.row.op === -1 ? red[500] : green[500] }}>
+        {parameters.value === -1 ? 'Списание' : 'Пополнение'}
       </span>
-
     ),
   },
   { field: 'azs', headerName: 'АЗС', width: 100 },
-
-
 ];
+
+export default transactionColumns;

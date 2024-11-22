@@ -1,10 +1,5 @@
-import { useSelector } from "react-redux";
-import { GridColDef } from "@mui/x-data-grid";
-import { ReactElement } from "react";
-import { DataTable } from "../layouts/data-layouts/data-table/data-table";
-import generateRandomTransaction from "../../mock/card-transaction";
-import { singleStyle } from "./single.style";
-import { Box, Typography } from "@mui/material";
+import { Box, Typography } from '@mui/material';
+import singleStyle from './single.style';
 
 type Properties = {
   img?: string;
@@ -16,7 +11,7 @@ type Properties = {
   dataGrid?: JSX.Element;
 };
 
-const Single = (properties: Properties) => {
+function Single(properties: Properties) {
   const { img, title, details, otherDetails, dataGrid } = properties;
 
   return (
@@ -30,8 +25,8 @@ const Single = (properties: Properties) => {
             </Typography>
           </Box>
           <Box className="details">
-            {Object.entries(details).map(([key, value], index) => (
-              <Box className="item" key={index}>
+            {Object.entries(details).map(([key, value]) => (
+              <Box className="item" key={key}>
                 <Typography className="itemTitle" component="span">
                   {key}
                 </Typography>
@@ -44,8 +39,8 @@ const Single = (properties: Properties) => {
         </Box>
         {otherDetails && (
           <Box className="otherDetails">
-            {otherDetails.map((detail, index) => (
-              <Box className="otherDetail" key={index}>
+            {otherDetails.map((detail) => (
+              <Box className="otherDetail" key={detail.key}>
                 {detail}
               </Box>
             ))}
@@ -56,6 +51,6 @@ const Single = (properties: Properties) => {
       </Box>
     </Box>
   );
-};
+}
 
 export default Single;

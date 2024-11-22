@@ -1,5 +1,4 @@
-// DataModal.tsx
-import React, { ReactElement } from 'react';
+import React from 'react';
 import {
   Modal,
   IconButton,
@@ -13,7 +12,7 @@ import {
 import CloseIcon from '@mui/icons-material/Close';
 import { useTheme } from '@mui/material/styles';
 
-type DataModalProps = {
+type DataModalPropertiesType = {
   open: boolean;
   onClose: () => void;
   title?: React.ReactNode;
@@ -25,7 +24,7 @@ type DataModalProps = {
   actions?: React.ReactNode;
 };
 
-const DataModal: React.FC<DataModalProps> = ({
+function DataModal({
   open,
   onClose,
   title,
@@ -35,7 +34,7 @@ const DataModal: React.FC<DataModalProps> = ({
   sx,
   hideCloseButton = false,
   actions,
-}) => {
+}: DataModalPropertiesType) {
   const theme = useTheme();
 
   // Определяем, является ли экран малым
@@ -50,29 +49,35 @@ const DataModal: React.FC<DataModalProps> = ({
       return maxSize;
     }
     switch (maxSize) {
-      case 'xs':
+      case 'xs': {
         return theme.breakpoints.values.xs;
-      case 'sm':
+      }
+      case 'sm': {
         return theme.breakpoints.values.sm;
-      case 'md':
+      }
+      case 'md': {
         return theme.breakpoints.values.md;
-      case 'lg':
+      }
+      case 'lg': {
         return theme.breakpoints.values.lg;
-      case 'xl':
+      }
+      case 'xl': {
         return theme.breakpoints.values.xl;
-      default:
+      }
+      default: {
         return theme.breakpoints.values.sm;
+      }
     }
   };
 
   // Стили для контейнера модального окна
   const modalStyle: SxProps<Theme> = {
-    position: 'fixed' as 'fixed',
+    position: 'fixed' as const,
     top: shouldFullScreen ? '50%' : 0,
     left: shouldFullScreen ? '50%' : 'auto',
     right: shouldFullScreen ? 'auto' : 0,
     transform: shouldFullScreen ? 'translate(-50%, -50%)' : 'none',
-    width: shouldFullScreen ? "80%" : getMaxWidth(),
+    width: shouldFullScreen ? '80%' : getMaxWidth(),
     maxHeight: shouldFullScreen ? `calc(100% - ${theme.spacing(4)})` : '100%',
     bgcolor: 'background.paper',
     boxShadow: 24,
@@ -86,11 +91,7 @@ const DataModal: React.FC<DataModalProps> = ({
   };
 
   return (
-    <Modal
-      open={open}
-      onClose={onClose}
-      closeAfterTransition
-    >
+    <Modal open={open} onClose={onClose} closeAfterTransition>
       <Fade in={open}>
         <Box sx={modalStyle}>
           {/* Заголовок */}
@@ -120,9 +121,7 @@ const DataModal: React.FC<DataModalProps> = ({
             )}
           </Box>
           {/* Содержимое */}
-          <Box sx={{ p: 2, overflowY: 'auto' }}>
-            {children}
-          </Box>
+          <Box sx={{ p: 2, overflowY: 'auto' }}>{children}</Box>
           {/* Действия */}
           {actions && (
             <Box
@@ -139,6 +138,6 @@ const DataModal: React.FC<DataModalProps> = ({
       </Fade>
     </Modal>
   );
-};
+}
 
-export { DataModal };
+export default DataModal;
